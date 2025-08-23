@@ -9,7 +9,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 const Reserve = ({ setOpen, hotelId }) => {
   const { data, loading, error } = useFetch(`/hotels/room/${hotelId}`);
-
+  
   const [selectedRooms, setSelectedRooms] = useState([]);
   const { dates } = useContext(SearchContext);
   const navigate = useNavigate();
@@ -42,20 +42,24 @@ const Reserve = ({ setOpen, hotelId }) => {
         : selectedRooms.filter((item) => item !== value)
     );
   };
+  const BASE_URL = import.meta.env.VITE_API_URL || "";
 
   const handleClick = async () => {
     try {
       await Promise.all(
-        selectedRooms.map((roomId) => {
-          const res =  axios.put(`/rooms/availability/${roomId}`, {
+        selectedRooms.map(async (roomId) => {
+          const res =  axios.put(`${BASE_URL}/rooms/availability/${roomId}`, {
             dates: allDates,
           });
           return res.data;
         })
       );
       setOpen(false);
-      Navigate("/")
-    } catch (err) {}
+      navigate("/");
+    } catch (err) {
+        console.error("Error updating room availability:", err);
+
+    }
   };
 
   return (

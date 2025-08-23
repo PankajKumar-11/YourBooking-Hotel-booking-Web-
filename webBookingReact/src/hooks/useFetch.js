@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const useFetch = (url) => {
@@ -6,16 +6,22 @@ const useFetch = (url) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  // Get API base URL from environment variables
   const BASE_URL = import.meta.env.VITE_API_URL || "";
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`${BASE_URL}${url}`);
+        // IMPORTANT: Remove /api prefix from url since BASE_URL already has it
+        const cleanUrl = url.startsWith('/api') ? url.substring(4) : url;
+        console.log(`Fetching from: ${BASE_URL}${cleanUrl}`);
+        
+        const res = await axios.get(`${BASE_URL}${cleanUrl}`);
         setData(res.data);
       } catch (err) {
         setError(err);
+        console.error("Error fetching data:", err);
       }
       setLoading(false);
     };
@@ -25,7 +31,8 @@ const useFetch = (url) => {
   const reFetch = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${BASE_URL}${url}`);
+      const cleanUrl = url.startsWith('/api') ? url.substring(4) : url;
+      const res = await axios.get(`${BASE_URL}${cleanUrl}`);
       setData(res.data);
     } catch (err) {
       setError(err);

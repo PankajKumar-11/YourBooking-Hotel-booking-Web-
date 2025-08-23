@@ -7,12 +7,14 @@ import { hotelInputs } from "../../formSource";
 import useFetch from "../../hooks/useFetch";
 import { useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const NewHotel = () => {
   const [files, setFiles] = useState(null);
   const [info, setInfo] = useState({});
   const [rooms, setRooms] = useState([]);
   const { data, loading, error } = useFetch(`/rooms`); // useFetch now uses BASE_URL
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -33,6 +35,7 @@ const NewHotel = () => {
     console.log(rooms);
   }, [rooms]);
 
+  const BASE_URL = import.meta.env.VITE_API_URL || "";
   const handleClick = async (e) => {
     e.preventDefault();
     try {
@@ -55,8 +58,8 @@ const NewHotel = () => {
         rooms,
         photos: list,
       };
-      const BASE_URL = import.meta.env.VITE_API_URL || "";
       await axios.post(`${BASE_URL}/hotels`, newHotel);
+      navigate("/hotels");
     } catch {}
   };
 
