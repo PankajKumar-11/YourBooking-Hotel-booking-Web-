@@ -1,5 +1,5 @@
 import React from "react";
-import "./featuredProperties.css";
+import "./FeaturedProperties.css";
 import useFetch from "../../hooks/useFetch";
 const FeaturedProperties = () => {
   const { data, loading, error } = useFetch(
