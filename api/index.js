@@ -13,10 +13,16 @@ import cors from "cors";
 dotenv.config()
 
 const app = express()
+
+const allowedOrigins = [
+  "https://yourbookingadmin.netlify.app",
+  "https://yourbookingapp.netlify.app",
+  "http://localhost:5173", // for local client dev
+  "http://localhost:8800"  // for local admin dev
+];
+
 app.use(cors({
-  origin: process.env.NODE_ENV === "production" 
-    ? ["https://your-client-url.netlify.app", "https://your-admin-url.netlify.app"]
-    : "http://localhost:5173",
+  origin:allowedOrigins,
   credentials: true
 }));
 const connect = async () => {
