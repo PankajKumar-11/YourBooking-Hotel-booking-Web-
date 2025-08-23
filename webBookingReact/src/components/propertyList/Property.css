@@ -1,0 +1,35 @@
+
+.homeBrowseProperty{
+    margin-top: 50px;
+}
+.propertyList{
+    margin-top: 15px;
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    gap: 20px;
+}
+
+.propertyItem img{
+     border-radius: 0.5rem;
+    height: 200px;
+    width: 240px;
+    transition: transform 0.3s ease;
+}
+.propertyItem img:hover{
+    transform: scale(1.05);
+}
+
+.propertyType{
+    font-size: 0.8rem;
+}
+
+.propertyType>span{
+    color: #827f7f;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.propertyType>h2{
+    text-transform: capitalize;
+}

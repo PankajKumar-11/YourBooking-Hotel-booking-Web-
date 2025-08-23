@@ -1,0 +1,58 @@
+.mailList{
+   width: 100%;
+   height: 250px;
+   background-color: #003580;
+   margin-bottom: 50px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.mailContent{
+    display: flex;
+    flex-direction: column;
+       width: 100%;
+
+}
+
+.mailContent1{
+     display: flex;
+     flex-direction: column;
+     color: white;
+     gap: 0.7rem;
+     width: 100%;
+}
+
+.mailTitle{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.mailSlogan{
+    font-weight: 400;
+    font-size: 1.4rem;
+}
+
+.mailData{
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.mailInput{
+    width: 25%;
+    padding:0px 10px;
+    outline: none;  
+}
+
+.mailButton{
+    padding: 0.8rem 2.2rem;
+    background-color: #2868c1;
+    color: white;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 0.7rem;
+}

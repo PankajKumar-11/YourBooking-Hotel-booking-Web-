@@ -1,0 +1,117 @@
+.searchItem{
+    border: 1px solid lightgray;
+    padding: 0.7rem;
+    display: flex;
+    margin-bottom: 0.9rem;
+    justify-content: space-between;
+    gap: 0.9rem;
+    border-radius: 0.6rem;
+}
+
+.siImg{
+    height: 210px;
+    width: 210px;
+    object-fit: cover;
+}
+
+.siDisc{
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    gap: 0.8rem;
+    flex:2
+}
+
+.siTitle{
+    font-size: 1.4rem;
+    color: #0071c2;
+}
+
+.siLocation{
+    display: flex;
+    gap: 0.7rem;
+}
+
+.siRoom{
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.siPerks{
+    display: flex;
+    flex-direction: column;
+    color: green;
+    font-weight: 500;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+}
+
+.siSubtitle{
+    font-weight: bold;
+}
+
+.siDetails{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: end;
+    align-items: end;
+}
+
+.siQuality{
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.siReview{
+    display: flex;
+    flex-direction: column;
+}
+
+.Review{
+    font-weight: 500;
+    font-size: 1rem;
+}
+.ReviewNo{
+    font-size: 0.7rem;
+    color: #555;
+}
+.siRating{
+    padding: 0.5rem 0.4rem;
+    border-radius: 0.6rem;
+    background-color: #003580;
+    color: white;
+}
+
+.siPrice{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.siStay{
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.siPriceTag{
+    font-size:1.45rem;
+    font-weight: 400;
+}
+.siTaxes{
+     font-size: 0.7rem;
+     color: #555;
+     margin-bottom: 0.3rem;
+}
+
+.siAvailability{
+    padding: 0.7rem 1.4rem;
+    background-color: #0071c2;
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.4rem;
+}

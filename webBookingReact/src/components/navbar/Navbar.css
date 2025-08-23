@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Ubuntu", sans-serif;
+}
+.ubuntu-medium-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+
+
+.navbar{
+    height: 60px;
+    background-color: #003580;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.nav-Container{
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+.logo{
+    padding: 15px 0px;
+  font-weight: 400;
+  font-size: 2rem;
+
+}
+
+.navButton{
+margin-left: 20px;
+padding: 8px 15px;
+color: #003580;
+border: none ;
+cursor: pointer;
+}

@@ -1,0 +1,56 @@
+.featured{
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    justify-content:center;
+    gap: 5px;
+}
+
+.featuredItems{
+    width: 100%;
+    object-fit: cover;
+}
+
+.featuredItems img{
+    border-radius: 0.6rem;
+    height: 130px;
+    width: 180px;
+      transition: transform 0.3s ease;
+} 
+.featuredItems img:hover{
+    transform: scale(1.05);
+}
+
+.featuredTitle{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+.FeaturedCity{
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.FeaturedHotels{
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: gray;
+}
+
+.homeTitle{
+    margin-top: 30px;
+    width:1024px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.homeTitle p{
+    padding-left: 0.3rem;
+    font-weight: 300;
+} 
+
+.homeTitle h1{
+    font-size: 1.7rem;
+}

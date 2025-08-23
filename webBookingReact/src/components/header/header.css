@@ -1,0 +1,131 @@
+.header{
+    background-color: #003580;
+    color: white;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+
+.header-Container{
+    width: 100%;
+    max-width: 1024px;
+    margin: 20px 0px 100px 0px;
+}
+
+.header-Container.listMode{
+    margin: 20px 0px 0px 0px;
+}
+
+.headerList{
+    display: flex;
+    gap:40px;
+    margin-bottom: 50px;
+}
+
+
+.headerListItem{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index:3;
+}
+
+.headerListItem.active{
+
+    border:1px solid white;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.headerDisc{
+    margin:20px 0px;
+}
+
+.headerBtn{
+    background-color: #0071c2;
+    color: white;
+    border: none;
+    padding: 13px 23px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.headerSearch{
+    color: grey;
+    height: 30px;
+    background-color: white;
+    border: 2.5px solid #febb02;
+    display: flex;
+    align-items: center;
+    padding: 25px 0px;
+    justify-content: space-around;
+    position: absolute;
+    bottom: -30px;
+    width: 100%;
+    max-width: 1024px; 
+    border-radius: 5px;
+}
+.headerIcon{
+    color:lightgray
+}
+
+.headerSearchItem{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.headerSearchInput{
+    border: none;
+    outline: none;
+}
+
+.headerSearchText{
+    cursor: pointer;
+    color:lightgray
+}
+
+.date{
+    position: absolute;
+    top:60px;
+    z-index: 2;
+}
+
+.options{
+     z-index: 2;
+    position: absolute;
+    top: 60px;
+    background-color: white;
+    color: gray;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.466)  ;
+}
+
+.optionItem{
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px;
+    font-size: 1.1rem;
+    color: black;
+}
+
+.optionCounterButton{
+    height: 1.2rem;
+    width: 1.2rem;
+    border:1px solid #0071c2;
+    color: #0071c2;
+    cursor: pointer;
+    background-color: white;
+}
+
+.optionCounterButton:disabled{
+    cursor: not-allowed;
+}
+
+.optionCounter{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
