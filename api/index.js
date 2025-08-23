@@ -54,6 +54,11 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
+
+
 app.listen(8800, () => {
   connect();
   console.log("Connected to backend");
