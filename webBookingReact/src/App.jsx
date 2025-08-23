@@ -2,7 +2,7 @@
 import React from 'react';
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/home/home';
+import Home from './pages/home/Home';
 import List from './pages/Hotellists/List';
 import HotelInfo from './pages/hotelPage/hotelInfo'; 
 import Login from './pages/login/Login';
