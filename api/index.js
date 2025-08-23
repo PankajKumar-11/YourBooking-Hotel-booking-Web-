@@ -6,6 +6,8 @@ import usersRoute from "./routes/users.js"
 import hotelsRoute from "./routes/hotels.js"
 import roomsRoute from "./routes/rooms.js"
 import cookieParser from "cookie-parser";
+import cors from "cors";
+
 // Add CORS configuration at the top, after imports:
 
 dotenv.config()
