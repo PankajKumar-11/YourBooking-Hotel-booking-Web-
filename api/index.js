@@ -7,16 +7,16 @@ import hotelsRoute from "./routes/hotels.js"
 import roomsRoute from "./routes/rooms.js"
 import cookieParser from "cookie-parser";
 // Add CORS configuration at the top, after imports:
+
+dotenv.config()
+
+const app = express()
 app.use(cors({
   origin: process.env.NODE_ENV === "production" 
     ? ["https://your-client-url.netlify.app", "https://your-admin-url.netlify.app"]
     : "http://localhost:5173",
   credentials: true
 }));
-
-dotenv.config()
-
-const app = express()
 const connect = async () => {
     try{
         await mongoose.connect(process.env.MONGO);
