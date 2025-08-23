@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useReducer } from "react";
-import axios from "axios"; // Add this import
+import axios from "axios";
 
 const INITIAL_STATE = {
   user: JSON.parse(localStorage.getItem("user")) || null,
@@ -43,18 +43,20 @@ const AuthReducer = (state, action) => {
   }
 };
 
-// Add this login function
+// Add BASE_URL for API calls
+const BASE_URL = import.meta.env.VITE_API_URL || "";
+
+// Updated login function
 export const login = async (credentials, dispatch) => {
   dispatch({ type: "LOGIN_START" });
   try {
-    // Get API base URL from environment variables
-    const BASE_URL = import.meta.env.VITE_API_URL || "";
-    
-    // Make the login request - remove /api prefix if BASE_URL already has it
     const res = await axios.post(`${BASE_URL}/auth/login`, credentials);
     dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
   } catch (err) {
-    dispatch({ type: "LOGIN_FAILURE", payload: err.response?.data || "Login failed" });
+    dispatch({
+      type: "LOGIN_FAILURE",
+      payload: err.response?.data || "Login failed",
+    });
   }
 };
 
