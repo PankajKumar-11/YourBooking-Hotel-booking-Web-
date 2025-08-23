@@ -37,7 +37,7 @@ const List = () => {
 
 
   const { data, loading, error, reFetch } = useFetch(
-    `/api/hotels?city=${Destination.toLowerCase()}&min=${min || 0}&max=${max || 999}`
+    `/hotels?city=${Destination.toLowerCase()}&min=${min || 0}&max=${max || 999}`
   );
 
   const handleClick = ()=>{
