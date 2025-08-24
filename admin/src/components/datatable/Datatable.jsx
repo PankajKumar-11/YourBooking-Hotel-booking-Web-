@@ -25,37 +25,32 @@ const Datatable = ({ columns }) => {
   // Update delete function:
   const handleDelete = async (id) => {
     try {
+      console.log("Attempting to delete item with ID:", id);
+      console.log("Full URL:", `${BASE_URL}/${path}/${id}`);
+      
       const user = JSON.parse(localStorage.getItem("user"));
       const token = user?.token || "";
       
-      // Add verification step HERE - before the delete request
-      try {
-        // Check if room exists first
-        const checkResponse = await axios.get(`${BASE_URL}/${path}/${id}`, {
-          headers: { Authorization: token ? `Bearer ${token}` : "" }
-        });
-        console.log(`${path} exists:`, checkResponse.data);
-        
-        // If we get here, the room exists, so proceed with delete
-        await axios.delete(`${BASE_URL}/${path}/${id}`, {
-          headers: { Authorization: token ? `Bearer ${token}` : "" }
-        });
-        
-        // Update UI after successful delete
-        setList(list.filter((item) => item._id !== id));
-        
-      } catch (checkErr) {
-        if (checkErr.response?.status === 404) {
-          alert(`This ${path} doesn't exist - it may have been deleted already`);
-          // Refresh the list to remove the non-existent item
-          window.location.reload();
-        } else {
-          throw checkErr; // Re-throw for the outer catch block
-        }
-      }
+      // Make request with better error handling
+      const response = await axios.delete(`${BASE_URL}/${path}/${id}`, {
+        headers: { Authorization: token ? `Bearer ${token}` : "" }
+      });
+      
+      console.log("Delete response:", response.data);
+      
+      // Update UI after confirmed deletion
+      setList(list.filter((item) => item._id !== id));
     } catch (err) {
-      console.error("Delete failed:", err);
-      alert(`Failed to delete: ${err.response?.data?.message || err.message}`);
+      console.error("Full error:", err);
+      
+      // Check for specific error types
+      if (err.response?.status === 404) {
+        console.log("Server says item doesn't exist");
+      } else if (err.response?.status === 403) {
+        console.log("Permission denied");
+      }
+      
+      alert(`Error: ${err.response?.data?.message || err.message}`);
     }
   };
 
