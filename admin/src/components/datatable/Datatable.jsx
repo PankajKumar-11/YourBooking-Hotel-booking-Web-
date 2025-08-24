@@ -6,6 +6,7 @@ import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 
 const Datatable = ({ columns }) => {
+  const BASE_URL = import.meta.env.VITE_API_URL || ""; // Add this definition at the top of the component
   const location = useLocation();
   const path = location.pathname.split("/")[1];
   const [list, setList] = useState([]);
@@ -24,23 +25,26 @@ const Datatable = ({ columns }) => {
   // Update delete function:
   const handleDelete = async (id) => {
     try {
-      // Get auth token
+      // Get authentication token
       const user = JSON.parse(localStorage.getItem("user"));
-      const token = user?.token;
+      const token = user?.token || ""; // Add fallback empty string
 
-      if (!token) {
-        alert("You must be logged in to delete items");
-        return;
-      }
+      // Log for debugging
+      console.log(`Deleting ${path} with ID: ${id}`);
+      console.log(`Using URL: ${BASE_URL}/${path}/${id}`);
 
-      // Add authentication header
+      // Make the delete request with auth header
       await axios.delete(`${BASE_URL}/${path}/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+          "Content-Type": "application/json",
+        },
       });
 
+      // Update the UI
       setList(list.filter((item) => item._id !== id));
     } catch (err) {
-      console.error("Delete error:", err);
+      console.error("Delete failed:", err);
       alert("Failed to delete: " + (err.response?.data?.message || err.message));
     }
   };
