@@ -42,15 +42,54 @@ const Login = () => {
     }
   };
 
-  const handleRegisterClick = async (e) => {
+  // Update the handleRegister function
+  const handleRegister = async (e) => {
     e.preventDefault();
+
+    // Validate inputs before sending
+    if (!credentials.username || !credentials.email || !credentials.password) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    // Email validation
+    if (!credentials.email.includes("@")) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    // Password length check
+    if (credentials.password.length < 6) {
+      alert("Password must be at least 6 characters long");
+      return;
+    }
+
     try {
       const BASE_URL = import.meta.env.VITE_API_URL || "";
-      await axios.post(`${BASE_URL}/auth/register`, credentials);
+
+      // Add better error logging
+      console.log("Sending registration with:", credentials);
+
+      // Make sure we send proper headers
+      const response = await axios.post(
+        `${BASE_URL}/auth/register`,
+        credentials,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Registration response:", response.data);
       alert("Registration successful! You can now login");
-      setIsLogin(true);
+      setIsLogin(true); // Switch to login tab
     } catch (err) {
-      alert(err.response?.data?.message || "Registration failed");
+      console.error("Registration error details:", err.response?.data);
+      alert(
+        err.response?.data?.message ||
+          "Registration failed. Please try again."
+      );
     }
   };
 
@@ -109,7 +148,7 @@ const Login = () => {
             Login
           </button>
         ) : (
-          <button onClick={handleRegisterClick} className="lButton">
+          <button onClick={handleRegister} className="lButton">
             Register
           </button>
         )}

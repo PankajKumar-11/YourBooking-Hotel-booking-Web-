@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <div className='navbar'>
-      <div className="navContainer">
+      <div className="nav-Container">
         <Link to="/" className="logo">
           YourBooking
         </Link>
