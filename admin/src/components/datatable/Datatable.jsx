@@ -1,9 +1,8 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
-import { useEffect } from "react";
 import axios from "axios";
 
 const Datatable = ({ columns }) => {
@@ -25,18 +24,24 @@ const Datatable = ({ columns }) => {
   // Update delete function:
   const handleDelete = async (id) => {
     try {
+      // Get auth token
       const user = JSON.parse(localStorage.getItem("user"));
       const token = user?.token;
 
-      // Add auth token to delete request
+      if (!token) {
+        alert("You must be logged in to delete items");
+        return;
+      }
+
+      // Add authentication header
       await axios.delete(`${BASE_URL}/${path}/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
       });
 
       setList(list.filter((item) => item._id !== id));
     } catch (err) {
-      console.log(err);
+      console.error("Delete error:", err);
+      alert("Failed to delete: " + (err.response?.data?.message || err.message));
     }
   };
 
