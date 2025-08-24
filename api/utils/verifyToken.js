@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken"
 import {createError} from "../utils/error.js"
-import axios from "axios";
 
 export const verifyToken = (req, res, next) => {
   // Check for token in both cookies and Authorization header
@@ -19,32 +18,24 @@ export const verifyToken = (req, res, next) => {
   });
 };
 
-
-export const verifyUser = (req,res,next)=>{
-    verifyToken(req,res,next, ()=>{
-        if(req.user.id === req.params.id || req.user.isAdmin){
-            next();
-        }
-        else{
-             return next(createError(403,"You are not authorized"));
-        }
-    });
+export const verifyUser = (req, res, next) => {
+  verifyToken(req, res, (err) => {
+    if (err) return next(err);
+    if (req.user.id === req.params.id || req.user.isAdmin) {
+      next();
+    } else {
+      return next(createError(403, "You are not authorized"));
+    }
+  });
 };
 
-
-export const verifyAdmin = (req,res,next)=>{
-    verifyToken(req,res,next, ()=>{
-        if(req.user.isAdmin){
-            next();
-        }
-        else{
-             return next(createError(403,"You are not authorized"));
-        }
-    });
+export const verifyAdmin = (req, res, next) => {
+  verifyToken(req, res, (err) => {
+    if (err) return next(err);
+    if (req.user.isAdmin) {
+      next();
+    } else {
+      return next(createError(403, "You are not authorized"));
+    }
+  });
 };
-
-// When logging in, store token in cookie
-axios.post("/auth/login", credentials, { withCredentials: true });
-
-// For all requests, include credentials
-axios.get(`${BASE_URL}/users`, { withCredentials: true });
