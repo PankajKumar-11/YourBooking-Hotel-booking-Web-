@@ -6,7 +6,7 @@ import { useState } from "react";
 import { roomInputs } from "../../formSource";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
-import { AuthContextProvider } from "./context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const BASE_URL = import.meta.env.VITE_API_URL || "";
 

@@ -20,8 +20,12 @@ const useFetch = (url) => {
         const cleanUrl = url.startsWith('/api') ? url.substring(4) : url;
         console.log(`Fetching from: ${BASE_URL}${cleanUrl}`);
         
-        // Add authorization header
-        const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+        // Add authorization header if token exists
+        const config = token ? { 
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true // Add this if your backend uses cookies
+        } : {};
+        
         const res = await axios.get(`${BASE_URL}${cleanUrl}`, config);
         
         setData(res.data);

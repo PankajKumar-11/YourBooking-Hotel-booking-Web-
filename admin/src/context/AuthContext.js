@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useReducer } from "react";
+import axios from "axios";
 
 const INITIAL_STATE = {
   user: JSON.parse(localStorage.getItem("user")) || null,
@@ -39,6 +40,30 @@ const AuthReducer = (state, action) => {
       };
       default:
       return state;
+  }
+};
+
+export const login = async (credentials, dispatch) => {
+  dispatch({ type: "LOGIN_START" });
+  try {
+    const BASE_URL = import.meta.env.VITE_API_URL || "";
+    const res = await axios.post(`${BASE_URL}/auth/login`, credentials, {
+      withCredentials: true
+    });
+    
+    if (res.data.isAdmin) {
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+    } else {
+      dispatch({ 
+        type: "LOGIN_FAILURE", 
+        payload: { message: "You are not authorized!" } 
+      });
+    }
+  } catch (err) {
+    dispatch({ 
+      type: "LOGIN_FAILURE", 
+      payload: err.response?.data || { message: "Login failed" }
+    });
   }
 };
 

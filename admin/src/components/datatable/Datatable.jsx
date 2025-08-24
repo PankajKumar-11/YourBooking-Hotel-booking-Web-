@@ -24,17 +24,19 @@ const Datatable = ({ columns }) => {
 
   // Update delete function:
   const handleDelete = async (id) => {
-    const BASE_URL = import.meta.env.VITE_API_URL || "";
-    // Add auth token to delete requests
-    const user = JSON.parse(localStorage.getItem("user"));
-    const token = user?.token;
-    const config = { headers: { Authorization: `Bearer ${token}` } };
-
     try {
-      await axios.delete(`${BASE_URL}/${path}/${id}`, config);
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user?.token;
+
+      // Add auth token to delete request
+      await axios.delete(`${BASE_URL}/${path}/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
+
       setList(list.filter((item) => item._id !== id));
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
 
