@@ -14,18 +14,18 @@ const UserSchema = new mongoose.Schema(
     },
     state: {
       type: String,
-      required: true,
+      required: false,
     },
     city: {
       type: String,
-      required: true,
+      required: false,
     },
     img: {
       type: String,
     },
     phone: {
       type: String,
-      required: true,
+      required: false,
     },
     password: {
       type: String,
