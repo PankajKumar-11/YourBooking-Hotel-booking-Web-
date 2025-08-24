@@ -49,16 +49,19 @@ export const login = async (credentials, dispatch) => {
     const BASE_URL = import.meta.env.VITE_API_URL || "";
     const res = await axios.post(`${BASE_URL}/auth/login`, credentials);
     
-    // Check if response contains token and user is admin
-    if (!res.data.token) {
-      throw new Error("No token received from server");
-    }
+    // Log the response to see its structure
+    console.log("Login response:", res.data);
     
-    if (res.data.isAdmin) {
-      // Store user data including token
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      // Log for debugging
-      console.log("Login successful, token:", res.data.token);
+    // Add token explicitly if it's missing
+    const userData = {
+      ...res.data,
+      token: res.data.token || res.data.accessToken || res.data._id // Try different possible token field names
+    };
+    
+    if (userData.isAdmin) {
+      // Save to localStorage with token explicitly included
+      localStorage.setItem("user", JSON.stringify(userData));
+      dispatch({ type: "LOGIN_SUCCESS", payload: userData });
     } else {
       dispatch({ 
         type: "LOGIN_FAILURE", 
@@ -66,7 +69,6 @@ export const login = async (credentials, dispatch) => {
       });
     }
   } catch (err) {
-    console.error("Login error:", err);
     dispatch({ 
       type: "LOGIN_FAILURE", 
       payload: err.response?.data || { message: "Login failed" }

@@ -40,7 +40,7 @@ const NewHotel = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      // Get authentication token from localStorage
+      // Get authentication token
       const user = JSON.parse(localStorage.getItem("user"));
       const token = user?.token;
       
@@ -50,35 +50,69 @@ const NewHotel = () => {
         return;
       }
       
-      // Process images
-      const list = await Promise.all(
-        Object.values(files).map(async (file) => {
-          const data = new FormData();
-          data.append("file", file);
-          data.append("upload_preset", "upload");
-          const uploadRes = await axios.post(
-            "https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload",
-            data
+      // Log what's being sent (for debugging)
+      console.log("Creating hotel with data:", { ...info, rooms });
+      console.log("Using token:", token);
+      
+      // Upload images (if any)
+      let photoUrls = [];
+      if (files && Object.keys(files).length > 0) {
+        try {
+          photoUrls = await Promise.all(
+            Object.values(files).map(async (file) => {
+              const data = new FormData();
+              data.append("file", file);
+              data.append("upload_preset", "upload"); // Your Cloudinary preset
+              
+              const uploadRes = await axios.post(
+                "https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload",
+                data
+              );
+              console.log("Image uploaded:", uploadRes.data.url);
+              return uploadRes.data.url;
+            })
           );
-          return uploadRes.data.url;
-        })
-      );
-
+        } catch (uploadErr) {
+          console.error("Image upload failed:", uploadErr);
+          // Continue with hotel creation even if images fail
+        }
+      }
+      
+      // Make sure required fields are present
+      if (!info.name || !info.city || !info.type) {
+        alert("Please fill all required fields (name, city, type)");
+        return;
+      }
+      
       const newHotel = {
         ...info,
-        rooms,
-        photos: list,
+        rooms: Array.isArray(rooms) ? rooms : [],
+        photos: photoUrls.length > 0 ? photoUrls : [],
       };
-
-      // Add authorization header to request
-      await axios.post(`${BASE_URL}/hotels`, newHotel, {
-        headers: { Authorization: `Bearer ${token}` }
+      
+      // Send request with proper headers
+      const BASE_URL = import.meta.env.VITE_API_URL || "";
+      
+      // Remove /api prefix if it's already in the BASE_URL
+      const endpoint = BASE_URL.includes("/api") ? "/hotels" : "/api/hotels";
+      
+      console.log("Sending request to:", `${BASE_URL}${endpoint}`);
+      
+      const response = await axios.post(`${BASE_URL}${endpoint}`, newHotel, {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
       });
       
+      console.log("Hotel creation successful:", response.data);
+      alert("Hotel created successfully!");
       navigate("/hotels");
     } catch (err) {
-      console.error("Error creating hotel:", err.response?.data || err.message);
-      alert("Failed to create hotel: " + (err.response?.data?.message || err.message));
+      console.error("Hotel creation failed:", err);
+      console.error("Response data:", err.response?.data);
+      console.error("Status:", err.response?.status);
+      alert(`Failed to create hotel: ${err.response?.data?.message || err.message}`);
     }
   };
 
