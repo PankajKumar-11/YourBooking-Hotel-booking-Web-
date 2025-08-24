@@ -7,18 +7,23 @@ const useFetch = (url) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  // Get API base URL from environment variables
   const BASE_URL = import.meta.env.VITE_API_URL || "";
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        // IMPORTANT: Remove /api prefix from url since BASE_URL already has it
+        // Get auth token from localStorage
+        const user = JSON.parse(localStorage.getItem("user"));
+        const token = user?.token;
+        
         const cleanUrl = url.startsWith('/api') ? url.substring(4) : url;
         console.log(`Fetching from: ${BASE_URL}${cleanUrl}`);
         
-        const res = await axios.get(`${BASE_URL}${cleanUrl}`);
+        // Add authorization header
+        const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+        const res = await axios.get(`${BASE_URL}${cleanUrl}`, config);
+        
         setData(res.data);
       } catch (err) {
         setError(err);
@@ -29,11 +34,18 @@ const useFetch = (url) => {
     fetchData();
   }, [url]);
 
+  // Update reFetch to also include auth token
   const reFetch = async () => {
     setLoading(true);
     try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user?.token;
+      
       const cleanUrl = url.startsWith('/api') ? url.substring(4) : url;
-      const res = await axios.get(`${BASE_URL}${cleanUrl}`);
+      // Add authorization header
+      const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+      const res = await axios.get(`${BASE_URL}${cleanUrl}`, config);
+      
       setData(res.data);
     } catch (err) {
       setError(err);

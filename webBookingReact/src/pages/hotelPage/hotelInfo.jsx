@@ -29,7 +29,7 @@ const HotelInfo = () => {
   const {dates,options} = useContext(SearchContext);
   
   
-  const { data, loading, error } = useFetch(`/api/hotels/find/${id}`);
+  const { data, loading, error } = useFetch(`/hotels/find/${id}`);
   const {user} = useContext(AuthContext);
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
@@ -93,7 +93,7 @@ const HotelInfo = () => {
                 />
                 <div className="sliderWrapper">
                   <img
-                    src={data.photos?.[slideNumber]}
+                    src={data.photos?.[slideNumber] || "https://via.placeholder.com/800x600?text=No+Image"}
                     alt=""
                     className="sliderImg"
                   />
@@ -116,16 +116,24 @@ const HotelInfo = () => {
                 <span>{data.address}</span>
               </div>
               <div className="hotelImages">
-                {data.photos?.map((photo, index) => (
-                  <div className="photoWrapper" key={index}>
-                    <img
-                      onClick={() => handleOpen(index)}
-                      src={photo}
-                      alt=""
-                      className="hotelImg"
-                    />
-                  </div>
-                ))}
+                {data.photos?.length > 0 ? (
+                  data.photos.map((photo, index) => (
+                    <div className="photoWrapper" key={index}>
+                      <img
+                        onClick={() => handleOpen(index)}
+                        src={photo}
+                        alt={`Hotel view ${index + 1}`}
+                        className="hotelImg"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = "https://via.placeholder.com/300x200?text=Image+Not+Available";
+                        }}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div className="noImagesMessage">No photos available for this hotel</div>
+                )}
               </div>
               <div className="hotelDetails">
                 <div className="hotelDetailsText">

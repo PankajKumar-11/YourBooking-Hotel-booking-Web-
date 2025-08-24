@@ -6,6 +6,7 @@ import { useState } from "react";
 import { roomInputs } from "../../formSource";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
+import { AuthContextProvider } from "./context/AuthContext";
 
 const BASE_URL = import.meta.env.VITE_API_URL || "";
 
@@ -25,7 +26,12 @@ const NewRoom = () => {
     // Create a new room with the provided info and hotelId
     const roomNumbers = rooms.split(",").map((room) => ({ number: room }));
     try {
-      await axios.post(`${BASE_URL}/rooms/${hotelId}`, { ...info, roomNumbers });
+      // Add auth token to post requests
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user?.token;
+      const config = { headers: { Authorization: `Bearer ${token}` } };
+
+      await axios.post(`${BASE_URL}/rooms/${hotelId}`, { ...info, roomNumbers }, config);
     } catch (err) {
       console.log(err);
     }

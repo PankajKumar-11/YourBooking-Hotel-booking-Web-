@@ -24,7 +24,7 @@ const Login = () => {
     e.preventDefault();
     dispatch({type:"LOGIN_START"});
     try{
-    const res = await axios.post(`${BASE_URL}/auth/login`, credentials);
+    const res = await axios.post(`${BASE_URL}/auth/login`, credentials, { withCredentials: true });
     dispatch({type:"LOGIN_SUCCESS" , payload:res.data.details});
     if(res.data.isAdmin){
       navigate("/")

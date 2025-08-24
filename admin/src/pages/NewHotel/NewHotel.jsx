@@ -58,7 +58,13 @@ const NewHotel = () => {
         rooms,
         photos: list,
       };
-      await axios.post(`${BASE_URL}/hotels`, newHotel);
+
+      // Add auth token to post requests
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user?.token;
+      const config = { headers: { Authorization: `Bearer ${token}` } };
+
+      await axios.post(`${BASE_URL}/hotels`, newHotel, config);
       navigate("/hotels");
     } catch {}
   };

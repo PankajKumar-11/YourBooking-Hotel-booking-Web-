@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken"
 import {createError} from "../utils/error.js"
+import axios from "axios";
 
 export const verifyToken = (req,res,next)=>{
     const token = req.cookies.access_token;
@@ -37,3 +38,9 @@ export const verifyAdmin = (req,res,next)=>{
         }
     });
 };
+
+// When logging in, store token in cookie
+axios.post("/auth/login", credentials, { withCredentials: true });
+
+// For all requests, include credentials
+axios.get(`${BASE_URL}/users`, { withCredentials: true });
