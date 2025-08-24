@@ -65,7 +65,7 @@ const NewHotel = () => {
               data.append("upload_preset", "upload"); // Your Cloudinary preset
               
               const uploadRes = await axios.post(
-                "https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload",
+                "https://api.cloudinary.com/v1_1/dawvddan2/image/upload",
                 data
               );
               console.log("Image uploaded:", uploadRes.data.url);
@@ -91,19 +91,16 @@ const NewHotel = () => {
       };
       
       // Send request with proper headers
-      const BASE_URL = import.meta.env.VITE_API_URL || "";
-      
-      // Remove /api prefix if it's already in the BASE_URL
-      const endpoint = BASE_URL.includes("/api") ? "/hotels" : "/api/hotels";
-      
-      console.log("Sending request to:", `${BASE_URL}${endpoint}`);
-      
-      const response = await axios.post(`${BASE_URL}${endpoint}`, newHotel, {
+      const config = {
         headers: { 
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
         }
-      });
+      };
+      
+      console.log("Sending request to:", `${BASE_URL}/hotels`);
+      
+      const response = await axios.post(`${BASE_URL}/hotels`, newHotel, config);
       
       console.log("Hotel creation successful:", response.data);
       alert("Hotel created successfully!");
