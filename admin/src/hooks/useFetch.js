@@ -17,6 +17,7 @@ const useFetch = (url) => {
         const user = JSON.parse(localStorage.getItem("user"));
         const token = user?.token;
         
+        // Remove /api prefix if BASE_URL already has it
         const cleanUrl = url.startsWith('/api') ? url.substring(4) : url;
         console.log(`Fetching from: ${BASE_URL}${cleanUrl}`);
         
@@ -45,6 +46,7 @@ const useFetch = (url) => {
       const user = JSON.parse(localStorage.getItem("user"));
       const token = user?.token;
       
+      // Remove /api prefix if BASE_URL already has it
       const cleanUrl = url.startsWith('/api') ? url.substring(4) : url;
       // Add authorization header
       const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};

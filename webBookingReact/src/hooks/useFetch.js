@@ -13,7 +13,7 @@ const useFetch = (url) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        // IMPORTANT: Remove /api prefix from url since BASE_URL already has it
+        // Remove /api prefix if BASE_URL already has it
         const cleanUrl = url.startsWith('/api') ? url.substring(4) : url;
         console.log(`Fetching from: ${BASE_URL}${cleanUrl}`);
         

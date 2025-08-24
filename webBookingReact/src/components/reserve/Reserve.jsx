@@ -45,6 +45,10 @@ const Reserve = ({ setOpen, hotelId }) => {
   const BASE_URL = import.meta.env.VITE_API_URL || "";
 
   const handleClick = async () => {
+    if (selectedRooms.length === 0) {
+      alert("Please select at least one room");
+      return;
+    }
     try {
       await Promise.all(
         selectedRooms.map(async (roomId) => {

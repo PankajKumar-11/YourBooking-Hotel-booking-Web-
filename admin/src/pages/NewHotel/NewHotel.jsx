@@ -13,7 +13,8 @@ const NewHotel = () => {
   const [files, setFiles] = useState(null);
   const [info, setInfo] = useState({});
   const [rooms, setRooms] = useState([]);
-  const { data, loading, error } = useFetch(`/rooms`); // useFetch now uses BASE_URL
+  const [error, setError] = useState(null);
+  const { data, loading } = useFetch(`/rooms`); // useFetch now uses BASE_URL
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -66,7 +67,9 @@ const NewHotel = () => {
 
       await axios.post(`${BASE_URL}/hotels`, newHotel, config);
       navigate("/hotels");
-    } catch {}
+    } catch (err) {
+      setError(err.response?.data?.message || "Operation failed");
+    }
   };
 
   return (
@@ -134,6 +137,7 @@ const NewHotel = () => {
                       ))}
                 </select>
               </div>
+              {error && <div className="error">{error}</div>}
               <button onClick={handleClick}>Send</button>
             </form>
           </div>
