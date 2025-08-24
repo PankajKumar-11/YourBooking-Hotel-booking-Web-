@@ -40,17 +40,27 @@ const NewHotel = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
+      // Get authentication token from localStorage
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = user?.token;
+      
+      if (!token) {
+        alert("You must be logged in to add hotels.");
+        navigate("/login");
+        return;
+      }
+      
+      // Process images
       const list = await Promise.all(
         Object.values(files).map(async (file) => {
           const data = new FormData();
           data.append("file", file);
           data.append("upload_preset", "upload");
           const uploadRes = await axios.post(
-            "https://api.cloudinary.com/v1_1/dawvddan2/image/upload",
+            "https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload",
             data
           );
-          const { url } = uploadRes.data;
-          return url;
+          return uploadRes.data.url;
         })
       );
 
@@ -60,15 +70,15 @@ const NewHotel = () => {
         photos: list,
       };
 
-      // Add auth token to post requests
-      const user = JSON.parse(localStorage.getItem("user"));
-      const token = user?.token;
-      const config = { headers: { Authorization: `Bearer ${token}` } };
-
-      await axios.post(`${BASE_URL}/hotels`, newHotel, config);
+      // Add authorization header to request
+      await axios.post(`${BASE_URL}/hotels`, newHotel, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
       navigate("/hotels");
     } catch (err) {
-      setError(err.response?.data?.message || "Operation failed");
+      console.error("Error creating hotel:", err.response?.data || err.message);
+      alert("Failed to create hotel: " + (err.response?.data?.message || err.message));
     }
   };
 
