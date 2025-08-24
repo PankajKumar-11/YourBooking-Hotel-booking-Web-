@@ -61,13 +61,14 @@ const HotelInfo = () => {
     setSlideNumber(newSlideNumber);
   };
 
-  const handleClick = ()=>{
-     if(user){
-        setOpenModal(true);
-     }
-     else{
-      navigate("/login");
-     }
+  const handleClick = () => {
+    if (user) {
+      setOpenModal(true);
+    } else {
+      // Redirect to register page if not logged in
+      alert("Please register or login to book this hotel");
+      navigate("/register");
+    }
   }
 
   return (
