@@ -22,7 +22,15 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-  origin:allowedOrigins,
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, etc)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      return callback(new Error('CORS policy violation'), false);
+    }
+    return callback(null, true);
+  },
   credentials: true
 }));
 const connect = async () => {
