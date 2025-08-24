@@ -25,27 +25,37 @@ const Datatable = ({ columns }) => {
   // Update delete function:
   const handleDelete = async (id) => {
     try {
-      // Get authentication token
       const user = JSON.parse(localStorage.getItem("user"));
-      const token = user?.token || ""; // Add fallback empty string
-
-      // Log for debugging
-      console.log(`Deleting ${path} with ID: ${id}`);
-      console.log(`Using URL: ${BASE_URL}/${path}/${id}`);
-
-      // Make the delete request with auth header
-      await axios.delete(`${BASE_URL}/${path}/${id}`, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : "",
-          "Content-Type": "application/json",
-        },
-      });
-
-      // Update the UI
-      setList(list.filter((item) => item._id !== id));
+      const token = user?.token || "";
+      
+      // Add verification step HERE - before the delete request
+      try {
+        // Check if room exists first
+        const checkResponse = await axios.get(`${BASE_URL}/${path}/${id}`, {
+          headers: { Authorization: token ? `Bearer ${token}` : "" }
+        });
+        console.log(`${path} exists:`, checkResponse.data);
+        
+        // If we get here, the room exists, so proceed with delete
+        await axios.delete(`${BASE_URL}/${path}/${id}`, {
+          headers: { Authorization: token ? `Bearer ${token}` : "" }
+        });
+        
+        // Update UI after successful delete
+        setList(list.filter((item) => item._id !== id));
+        
+      } catch (checkErr) {
+        if (checkErr.response?.status === 404) {
+          alert(`This ${path} doesn't exist - it may have been deleted already`);
+          // Refresh the list to remove the non-existent item
+          window.location.reload();
+        } else {
+          throw checkErr; // Re-throw for the outer catch block
+        }
+      }
     } catch (err) {
       console.error("Delete failed:", err);
-      alert("Failed to delete: " + (err.response?.data?.message || err.message));
+      alert(`Failed to delete: ${err.response?.data?.message || err.message}`);
     }
   };
 
