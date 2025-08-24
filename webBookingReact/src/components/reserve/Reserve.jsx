@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import "./Reserve.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faL } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import useFetch from "../../hooks/useFetch";
 import { SearchContext } from "../../context/SearchContext";
 import axios from "axios";
@@ -18,7 +18,7 @@ const Reserve = ({ setOpen, hotelId }) => {
   useEffect(() => {
     if (!user) {
       alert("Please login or register to book a room");
-      navigate("/register");
+      navigate("/login?register=true");
       setOpen(false);
     }
   }, []);

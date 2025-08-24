@@ -27,10 +27,9 @@ const HotelInfo = () => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const {dates,options} = useContext(SearchContext);
-  
+  const { user } = useContext(AuthContext);
   
   const { data, loading, error } = useFetch(`/hotels/find/${id}`);
-  const {user} = useContext(AuthContext);
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API_URL || "";
@@ -65,9 +64,9 @@ const HotelInfo = () => {
     if (user) {
       setOpenModal(true);
     } else {
-      // Redirect to register page if not logged in
+      // Redirect to login page if not logged in
       alert("Please register or login to book this hotel");
-      navigate("/register");
+      navigate("/login?register=true");
     }
   }
 

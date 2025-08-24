@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import './Navbar.css'
-import {Link, useNavigate} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
 const Navbar = () => {
   
@@ -11,25 +11,26 @@ const Navbar = () => {
       dispatch({ type: "LOGOUT" });
       navigate("/");
     };
+  
 
   return (
     <div className='navbar'>
-      <div className="nav-Container">
-        <Link to="/" style={{color:'inherit' , textDecoration:"none"}}>
-        <div className="logo">
-            <span>Your Booking</span>
-        </div>
+      <div className="navContainer">
+        <Link to="/" className="logo">
+          YourBooking
         </Link>
+        
+       
         {user ? (
           <div className="navItems">
-            <span className="username">{user.username}</span>
+            <span>{user.username}</span>
             <button className="navButton" onClick={handleLogout}>
               Logout
             </button>
           </div>
         ) : (
           <div className="navItems">
-            <button className="navButton" onClick={() => navigate("/register")}>
+            <button className="navButton" onClick={() => navigate("/login?register=true")}>
               Register
             </button>
             <button className="navButton" onClick={() => navigate("/login")}>
