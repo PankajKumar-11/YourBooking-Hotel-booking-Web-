@@ -3,6 +3,7 @@ import "./login.scss";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"; // Import toast
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -37,14 +38,32 @@ const Login = () => {
         dispatch({ type: "LOGIN_SUCCESS", payload: userData });
         localStorage.setItem("user", JSON.stringify(userData));
         navigate("/");
+
+        // Add success toast
+        toast.success("Welcome to Admin Dashboard!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
       } else {
         dispatch({
           type: "LOGIN_FAILURE",
           payload: { message: "You are not authorized!" },
         });
+
+        // Add error toast
+        toast.error("You don't have admin privileges", {
+          position: "top-right",
+          autoClose: 5000,
+        });
       }
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response?.data });
+
+      // Add error toast
+      toast.error(err.response?.data?.message || "Login failed", {
+        position: "top-right",
+        autoClose: 5000,
+      });
     }
   };
 

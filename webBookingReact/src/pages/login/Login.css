@@ -3,38 +3,78 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #828385, #d7eaea);
+  /* Replace basic background with professional gradient and image */
+  background: linear-gradient(rgba(0, 53, 128, 0.7), rgba(0, 53, 128, 0.7)),
+              url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
   font-family: Arial, sans-serif;
 }
 
 .lContainer {
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
   padding: 30px 40px;
   border-radius: 12px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
-  width: 300px;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
+  width: 320px;
   text-align: center;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.lContainer h1 {
+  color: #003580;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 12px;
+  background: #f5f5f5;
+  border: none;
+  transition: all 0.3s;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: #555;
+}
+
+.tabs button.active {
+  background: #003580;
+  color: white;
 }
 
 .lInput {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin: 10px 0;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   font-size: 14px;
+  transition: border-color 0.3s;
 }
 
 .lInput:focus {
-  border-color: #4facfe;
+  border-color: #003580;
   outline: none;
-  box-shadow: 0px 0px 6px rgba(79, 172, 254, 0.5);
+  box-shadow: 0px 0px 6px rgba(0, 53, 128, 0.3);
 }
 
 .lButton {
   width: 100%;
-  padding: 10px;
-  margin-top: 15px;
+  padding: 12px;
+  margin-top: 20px;
   background: #0071c2;
   color: white;
   font-size: 16px;
@@ -45,34 +85,18 @@
 }
 
 .lButton:hover {
-  background: #3a8dde;
+  background: #005fa3;
+}
+
+.lButton:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
 }
 
 .lContainer span {
   display: block;
   margin-top: 15px;
-  color: red;
-  font-weight: bold;
-}
-
-.tabs {
-  display: flex;
-  margin-bottom: 20px;
-}
-
-.tabs button {
-  flex: 1;
-  padding: 10px;
-  background: none;
-  border: none;
-  border-bottom: 2px solid #ddd;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.tabs button.active {
-  border-bottom: 2px solid #0071c2;
-  color: #0071c2;
+  color: #e74c3c;
   font-weight: bold;
 }
 

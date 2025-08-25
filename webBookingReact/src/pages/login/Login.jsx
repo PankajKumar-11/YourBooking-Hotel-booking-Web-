@@ -3,6 +3,7 @@ import "./Login.css";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -33,12 +34,28 @@ const Login = () => {
       const BASE_URL = import.meta.env.VITE_API_URL || "";
       const res = await axios.post(`${BASE_URL}/auth/login`, credentials);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+
+      // Add success toast
+      toast.success("Login successful! Welcome back.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+
       navigate("/");
     } catch (err) {
       dispatch({
         type: "LOGIN_FAILURE",
         payload: err.response?.data || { message: "Login failed" },
       });
+
+      // Add error toast
+      toast.error(
+        err.response?.data?.message || "Login failed. Please try again.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+        }
+      );
     }
   };
 
@@ -82,13 +99,21 @@ const Login = () => {
       );
 
       console.log("Registration response:", response.data);
-      alert("Registration successful! You can now login");
+      // Add success toast
+      toast.success("Registration successful! You can now login", {
+        position: "top-right",
+        autoClose: 3000,
+      });
       setIsLogin(true); // Switch to login tab
     } catch (err) {
       console.error("Registration error details:", err.response?.data);
-      alert(
-        err.response?.data?.message ||
-          "Registration failed. Please try again."
+      // Add error toast
+      toast.error(
+        err.response?.data?.message || "Registration failed. Please try again.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+        }
       );
     }
   };

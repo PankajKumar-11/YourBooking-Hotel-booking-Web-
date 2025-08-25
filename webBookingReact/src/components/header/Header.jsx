@@ -36,8 +36,12 @@ const Header = ({type}) => {
   });
 
   const navigate = useNavigate();
-    const {user} = useContext(AuthContext);
+  const {user} = useContext(AuthContext);
   
+  // Add handler for login/register button
+  const handleAuthClick = () => {
+    navigate("/login?register=true");
+  };
 
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -49,7 +53,6 @@ const Header = ({type}) => {
   };
 
   const {dispatch}  =useContext(SearchContext);
-
 
   const handleSearch = ()=>{
     dispatch({type:"NEW_SEARCH",payload:{Destination,dates,options}});
@@ -91,7 +94,7 @@ const Header = ({type}) => {
               Get rewarded for your travels - unlock instant savings and
               exclusive perks.
             </p>
-           {!user && <button className="headerBtn">Sign In / Register</button>}
+           {!user && <button className="headerBtn" onClick={handleAuthClick}>Sign In / Register</button>}
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faBed} className="headerIcon" />

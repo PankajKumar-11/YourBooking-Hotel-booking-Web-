@@ -4,12 +4,23 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
+// Import confirmation dialog
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
+// Import toast
+import { toast } from "react-toastify";
 
 const Datatable = ({ columns }) => {
-  const BASE_URL = import.meta.env.VITE_API_URL || ""; // Add this definition at the top of the component
+  const BASE_URL = import.meta.env.VITE_API_URL || "";
   const location = useLocation();
   const path = location.pathname.split("/")[1];
   const [list, setList] = useState([]);
+  // Add state for confirmation dialog
+  const [confirmDialog, setConfirmDialog] = useState({
+    open: false,
+    id: null,
+    title: "",
+    message: ""
+  });
   const { data, loading, error } = useFetch(`/api/${path}`);
 
   useEffect(() => {
@@ -22,35 +33,50 @@ const Datatable = ({ columns }) => {
 
   console.log(data);
 
-  // Update delete function:
-  const handleDelete = async (id) => {
+  // Modified to show confirmation first
+  const handleDelete = (id) => {
+    // Set item type based on path
+    const itemType = path === "users" ? "user" : path === "hotels" ? "hotel" : "room";
+    
+    // Open confirmation dialog
+    setConfirmDialog({
+      open: true,
+      id: id,
+      title: `Delete ${itemType}`,
+      message: `Are you sure you want to delete this ${itemType}? This action cannot be undone.`
+    });
+  };
+  
+  // New function to handle confirmed deletion with toast notifications
+  const handleConfirmedDelete = async () => {
+    const id = confirmDialog.id;
+    const itemType = path === "users" ? "User" : path === "hotels" ? "Hotel" : "Room";
+    
     try {
-      console.log("Attempting to delete item with ID:", id);
-      console.log("Full URL:", `${BASE_URL}/${path}/${id}`);
-      
       const user = JSON.parse(localStorage.getItem("user"));
-      const token = user?.token || "";
-      
-      // Make request with better error handling
-      const response = await axios.delete(`${BASE_URL}/${path}/${id}`, {
-        headers: { Authorization: token ? `Bearer ${token}` : "" }
+      await axios.delete(`${BASE_URL}/${path}/${id}`, {
+        headers: { Authorization: `Bearer ${user.token}` }
       });
       
-      console.log("Delete response:", response.data);
-      
-      // Update UI after confirmed deletion
       setList(list.filter((item) => item._id !== id));
+      // Close dialog
+      setConfirmDialog({...confirmDialog, open: false});
+      
+      // Show success toast notification
+      toast.success(`${itemType} deleted successfully!`, {
+        position: "top-right",
+        autoClose: 3000
+      });
     } catch (err) {
-      console.error("Full error:", err);
+      console.error("Delete error:", err);
+      // Close dialog
+      setConfirmDialog({...confirmDialog, open: false});
       
-      // Check for specific error types
-      if (err.response?.status === 404) {
-        console.log("Server says item doesn't exist");
-      } else if (err.response?.status === 403) {
-        console.log("Permission denied");
-      }
-      
-      alert(`Error: ${err.response?.data?.message || err.message}`);
+      // Show error toast notification instead of alert
+      toast.error(`Failed to delete ${itemType.toLowerCase()}: ${err.response?.data?.message || err.message}`, {
+        position: "top-right",
+        autoClose: 5000
+      });
     }
   };
 
@@ -93,6 +119,21 @@ const Datatable = ({ columns }) => {
         checkboxSelection
         getRowId={(row) => row._id}
       />
+      {/* Add confirmation dialog */}
+      <Dialog open={confirmDialog.open} onClose={() => setConfirmDialog({...confirmDialog, open: false})}>
+        <DialogTitle>{confirmDialog.title}</DialogTitle>
+        <DialogContent>
+          <p>{confirmDialog.message}</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmDialog({...confirmDialog, open: false})} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmedDelete} color="error" variant="contained">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

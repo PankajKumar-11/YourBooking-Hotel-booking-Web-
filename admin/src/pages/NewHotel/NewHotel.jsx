@@ -8,6 +8,7 @@ import useFetch from "../../hooks/useFetch";
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const NewHotel = () => {
   const [files, setFiles] = useState(null);
@@ -103,13 +104,24 @@ const NewHotel = () => {
       const response = await axios.post(`${BASE_URL}/hotels`, newHotel, config);
       
       console.log("Hotel creation successful:", response.data);
-      alert("Hotel created successfully!");
+      
+      // Add success toast
+      toast.success("Hotel created successfully!", {
+        position: "top-right",
+        autoClose: 3000
+      });
+      
       navigate("/hotels");
     } catch (err) {
       console.error("Hotel creation failed:", err);
       console.error("Response data:", err.response?.data);
       console.error("Status:", err.response?.status);
-      alert(`Failed to create hotel: ${err.response?.data?.message || err.message}`);
+      
+      // Add error toast
+      toast.error("Failed to create hotel. Please try again.", {
+        position: "top-right",
+        autoClose: 5000
+      });
     }
   };
 

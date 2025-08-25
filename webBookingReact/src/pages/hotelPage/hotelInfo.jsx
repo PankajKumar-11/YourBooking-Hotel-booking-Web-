@@ -18,6 +18,7 @@ import { SearchContext } from "../../context/SearchContext";
 import { AuthContext } from "../../context/AuthContext";
 import Reserve from "../../components/reserve/Reserve";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const HotelInfo = () => {
   const location = useLocation();
@@ -64,8 +65,10 @@ const HotelInfo = () => {
     if (user) {
       setOpenModal(true);
     } else {
-      // Redirect to login page if not logged in
-      alert("Please register or login to book this hotel");
+      toast.info("Please login or register to book a room", {
+        position: "top-right",
+        autoClose: 5000
+      });
       navigate("/login?register=true");
     }
   }

@@ -7,6 +7,7 @@ import { SearchContext } from "../../context/SearchContext";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Reserve = ({ setOpen, hotelId }) => {
   const { data, loading, error } = useFetch(`/hotels/room/${hotelId}`);
@@ -56,23 +57,34 @@ const Reserve = ({ setOpen, hotelId }) => {
 
   const handleClick = async () => {
     if (selectedRooms.length === 0) {
-      alert("Please select at least one room");
+      toast.warning("Please select at least one room");
       return;
     }
+
     try {
       await Promise.all(
-        selectedRooms.map(async (roomId) => {
-          const res =  axios.put(`${BASE_URL}/rooms/availability/${roomId}`, {
+        selectedRooms.map((roomId) => {
+          const res = axios.put(`${BASE_URL}/rooms/availability/${roomId}`, {
             dates: allDates,
           });
-          return res.data;
+          return res;
         })
       );
+
+      // Success toast
+      toast.success("Booking confirmed!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+
       setOpen(false);
       navigate("/");
     } catch (err) {
-        console.error("Error updating room availability:", err);
-
+      // Error toast
+      toast.error("Failed to complete your booking. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+      });
     }
   };
 
@@ -110,8 +122,8 @@ const Reserve = ({ setOpen, hotelId }) => {
                   </div>
                 ))}
               </div>
-              </div>
-        ))}
+            </div>
+          ))}
         <div onClick={handleClick} className="rButton">
           Reserve Now!
         </div>

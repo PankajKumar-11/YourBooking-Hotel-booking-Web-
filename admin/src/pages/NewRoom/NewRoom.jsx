@@ -7,6 +7,7 @@ import { roomInputs } from "../../formSource";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 const BASE_URL = import.meta.env.VITE_API_URL || "";
 
@@ -23,17 +24,26 @@ const NewRoom = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    // Create a new room with the provided info and hotelId
-    const roomNumbers = rooms.split(",").map((room) => ({ number: room }));
     try {
-      // Add auth token to post requests
-      const user = JSON.parse(localStorage.getItem("user"));
-      const token = user?.token;
-      const config = { headers: { Authorization: `Bearer ${token}` } };
+      const roomNumbers = rooms.split(",").map((room) => ({ number: room }));
+      const newRoom = {
+        ...info,
+        roomNumbers,
+      };
 
-      await axios.post(`${BASE_URL}/rooms/${hotelId}`, { ...info, roomNumbers }, config);
+      await axios.post(`/rooms/${hotelId}`, newRoom);
+
+      toast.success("Room created successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     } catch (err) {
       console.log(err);
+
+      toast.error("Failed to create room. Please check your inputs.", {
+        position: "top-right",
+        autoClose: 5000,
+      });
     }
   };
 

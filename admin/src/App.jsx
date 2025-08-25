@@ -9,10 +9,13 @@ import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/AuthContext";
-import { useNavigate, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { hotelColumns, roomColumns, userColumns } from "./datatablesource";
 import NewHotel from "./pages/NewHotel/NewHotel";
 import NewRoom from "./pages/NewRoom/NewRoom";
+// Import ToastContainer and styles
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -26,7 +29,7 @@ function App() {
   };
 
   return (
-     <div className={darkMode ? "app dark" : "app"}>
+    <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
           <Route path="/">
@@ -119,6 +122,20 @@ function App() {
             </Route>
           </Route>
         </Routes>
+        
+        {/* Add ToastContainer */}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </BrowserRouter>
     </div>
   );
