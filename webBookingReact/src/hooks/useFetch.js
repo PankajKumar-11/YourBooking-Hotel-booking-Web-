@@ -8,15 +8,18 @@ const useFetch = (url) => {
 
   const fetchData = async () => {
     setLoading(true);
-    setError(false); // Reset error state
     try {
+      // Check if url already includes /api
       const BASE_URL = import.meta.env.VITE_API_URL || "";
-      console.log("Fetching from:", `${BASE_URL}${url}`);
-      const res = await axios.get(`${BASE_URL}${url}`);
+      const apiUrl = url.startsWith('/api') 
+        ? `${BASE_URL}${url}` 
+        : `${BASE_URL}/api${url}`;
+        
+      console.log("Fetching from:", apiUrl);
+      const res = await axios.get(apiUrl);
       setData(res.data);
     } catch (err) {
       setError(err);
-      console.error("Fetch error:", err);
     }
     setLoading(false);
   };
