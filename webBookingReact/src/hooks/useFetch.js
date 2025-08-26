@@ -6,38 +6,28 @@ const useFetch = (url) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  // Get API base URL from environment variables
-  const BASE_URL = import.meta.env.VITE_API_URL || "";
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        // Remove /api prefix if BASE_URL already has it
-        const cleanUrl = url.startsWith('/api') ? url.substring(4) : url;
-        console.log(`Fetching from: ${BASE_URL}${cleanUrl}`);
-        
-        const res = await axios.get(`${BASE_URL}${cleanUrl}`);
-        setData(res.data);
-      } catch (err) {
-        setError(err);
-        console.error("Error fetching data:", err);
-      }
-      setLoading(false);
-    };
-    fetchData();
-  }, [url]);
-
-  const reFetch = async () => {
+  const fetchData = async () => {
     setLoading(true);
+    setError(false); // Reset error state
     try {
-      const cleanUrl = url.startsWith('/api') ? url.substring(4) : url;
-      const res = await axios.get(`${BASE_URL}${cleanUrl}`);
+      const BASE_URL = import.meta.env.VITE_API_URL || "";
+      console.log("Fetching from:", `${BASE_URL}${url}`);
+      const res = await axios.get(`${BASE_URL}${url}`);
       setData(res.data);
     } catch (err) {
       setError(err);
+      console.error("Fetch error:", err);
     }
     setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [url]);
+
+  // Add a reFetch function that can be called manually
+  const reFetch = async () => {
+    await fetchData();
   };
 
   return { data, loading, error, reFetch };
