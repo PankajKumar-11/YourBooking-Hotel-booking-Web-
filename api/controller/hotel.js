@@ -43,6 +43,7 @@ export const getHotel = async (req, res, next) => {
 };
 
 export const getHotels = async (req, res, next) => {
+  console.log("Query params:", req.query);
   try {
     const { min = 1, max = 50000, limit, featured, city } = req.query;
 
@@ -65,15 +66,22 @@ export const getHotels = async (req, res, next) => {
 
 
 export const countByCity = async (req, res, next) => {
-  const cities = req.query.cities.split(",");
   try {
+    const cities = req.query.cities.split(",");
+    console.log("Searching for cities:", cities); // Debug log
+    
     const list = await Promise.all(
-      cities.map((city) => {
-        return Hotel.countDocuments({ city: city.toLowerCase() });
+      cities.map(city => {
+        // Add case-insensitive search
+        return Hotel.countDocuments({ 
+          city: { $regex: new RegExp('^' + city.trim() + '$', 'i') } 
+        });
       })
     );
+    
+    console.log("City counts:", list); // Debug log
     res.status(200).json(list);
-  } catch (err) {s
+  } catch (err) {
     next(err);
   }
 };
