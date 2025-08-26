@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./SearchItem.css";
-const SearchItem = ({item}) => {
+const SearchItem = ({ item }) => {
   return (
     <div className="searchItem">
       <img className="siImg" src={item.photos[0]} />
@@ -11,8 +11,12 @@ const SearchItem = ({item}) => {
           <span className="siDistance">{item.distance}</span>
           <span className="siTaxiOp">Subway Access</span>
         </div>
-         <div className="siRoom">
-          <span className="siSubtitle">Royal Suite</span>
+        <div className="siRoom">
+          <span className="siSubtitle">
+            {item.rooms && item.rooms.length > 0
+              ? item.rooms.map((room) => room.title).join(", ")
+              : "Room information not available"}
+          </span>
           <span className="siFeatures">{item.desc}</span>
         </div>
         <div className="siPerks">
@@ -37,11 +41,11 @@ const SearchItem = ({item}) => {
           </div>
         )}
         <div className="siPrice">
-          <span className="siStay">1  night  {item.adult} adult</span>
+          <span className="siStay">1 night {item.adult} adult</span>
           <span className="siPriceTag">₹ {item.cheapestPrice}</span>
           <span className="siTaxes">+ ₹ 195 taxes and fees</span>
           <Link to={`/hotels/${item._id}`}>
-          <button className="siAvailability">See availability </button>
+            <button className="siAvailability">See availability </button>
           </Link>
         </div>
       </div>
