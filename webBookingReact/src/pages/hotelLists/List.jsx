@@ -85,33 +85,20 @@ const List = () => {
                 {`${format(dates[0].startDate, "MMM dd, yyyy")} to ${format(dates[0].endDate, "MMM dd, yyyy")}`}
               </span>
               
-              {/* Add overlay and fixed positioning to prevent overlapping */}
+              {/* Simple modal approach for date picker */}
               {openDate && (
-                <>
-                  <div className="datePickerOverlay" onClick={() => setOpenDate(false)}></div>
-                  <div className="datePickerWrapper">
-                    <button 
-                      onClick={() => setOpenDate(false)} 
-                      className="closeBtn"
-                      aria-label="Close date picker"
-                    >
-                      ×
-                    </button>
+                <div className="modal">
+                  <div className="modalOverlay" onClick={() => setOpenDate(false)}></div>
+                  <div className="modalContent">
+                    <button className="modalClose" onClick={() => setOpenDate(false)}>×</button>
                     <DateRange
                       editableDateInputs={true}
-                      onChange={(item) => {
-                        setDates([item.selection]);
-                        // Auto close after date selection (optional)
-                        // setOpenDate(false);
-                      }}
+                      onChange={(item) => setDates([item.selection])}
                       minDate={new Date()}
                       ranges={dates}
-                      className="dateSelector"
-                      months={1}
-                      direction="horizontal"
                     />
                   </div>
-                </>
+                </div>
               )}
             </div>
             <div className="lsItem">

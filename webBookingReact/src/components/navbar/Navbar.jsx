@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import './Navbar.css'
 import {Link, useNavigate} from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
 
-// Move avatar color function outside component so it's accessible globally
+// Keep the helper functions as is
 export const getAvatarColor = (username) => {
   try {
     if (!username) return "#0071c2";
@@ -11,53 +11,51 @@ export const getAvatarColor = (username) => {
     const sum = username.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return colors[sum % colors.length];
   } catch (error) {
-    console.error("Error generating avatar color:", error);
-    return "#0071c2"; // Default color if there's an error
+    return "#0071c2"; 
   }
 };
 
-// Get first letter of username for avatar
 export const getInitial = (username) => {
   try {
     return username && typeof username === 'string' ? username.charAt(0).toUpperCase() : "G";
   } catch (error) {
-    console.error("Error getting initial:", error);
-    return "G"; // Default initial if there's an error
+    return "G"; 
   }
 };
 
 const Navbar = () => {
-  
-    const { user, dispatch } = useContext(AuthContext);
-    const navigate = useNavigate();
-    const [activeNav, setActiveNav] = useState('');
+  const { user, dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-    const handleLogout = () => {
-      dispatch({ type: "LOGOUT" });
-      navigate("/");
-    };
-  
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/");
+  };
 
   return (
     <div className='navbar'>
       <div className="navContainer">
-        <Link to="/" className="logo">
-          YourBooking
-        </Link>
-        <div className="navItems">
-          <div className={`navItem ${activeNav === 'stays' ? 'active' : ''}`} onClick={() => setActiveNav('stays')}>
+        <div className="leftSection">
+          <Link to="/" className="logo">
+            YourBooking
+          </Link>
+        </div>
+        
+        <div className="centerSection">
+          <div className="navItem active">
             <span>Stays</span>
           </div>
-          <div className={`navItem ${activeNav === 'flights' ? 'active' : ''}`} onClick={() => setActiveNav('flights')}>
+          <div className="navItem">
             <span>Flights</span>
           </div>
-          <div className={`navItem ${activeNav === 'cars' ? 'active' : ''}`} onClick={() => setActiveNav('cars')}>
+          <div className="navItem">
             <span>Car Rentals</span>
           </div>
         </div>
-        {user ? (
-          <div className="userControls">
-            <div className="userInfo">
+        
+        <div className="rightSection">
+          {user ? (
+            <div className="userControls">
               <div 
                 className="userAvatar" 
                 style={{backgroundColor: user && user.username ? getAvatarColor(user.username) : "#0071c2"}}
@@ -65,21 +63,21 @@ const Navbar = () => {
                 {user && user.username ? getInitial(user.username) : "G"}
               </div>
               <span className="username">{user?.username || "Guest"}</span>
+              <button className="logoutBtn" onClick={handleLogout}>
+                Logout
+              </button>
             </div>
-            <button className="logoutBtn" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        ) : (
-          <div className="navItems">
-            <button className="navButton" onClick={() => navigate("/login?register=true")}>
-              Register
-            </button>
-            <button className="navButton" onClick={() => navigate("/login")}>
-              Login
-            </button>
-          </div>
-        )}
+          ) : (
+            <div className="authButtons">
+              <button className="navButton" onClick={() => navigate("/login?register=true")}>
+                Register
+              </button>
+              <button className="navButton" onClick={() => navigate("/login")}>
+                Login
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
