@@ -86,10 +86,11 @@
 .dateToggle {
   cursor: pointer;
   padding: 10px;
-  background-color: #f7f7f7;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
   transition: background-color 0.2s;
 }
 
@@ -296,7 +297,7 @@
 }
 
 /* Simple modal for date picker */
-.modal {
+/* .modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -345,7 +346,7 @@
 
 .modalClose:hover {
   background-color: #e0e0e0;
-}
+} */
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
@@ -358,4 +359,43 @@
     position: static;
     margin-bottom: 20px;
   }
+}
+
+/* Replace modal styles with dropdown styles */
+
+.datePickerDropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 1000;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+}
+
+.dateCloseBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #f0f0f0;
+  border: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+}
+
+.dateCloseBtn:hover {
+  background-color: #e0e0e0;
+}
+
+/* Ensure the parent has position relative */
+.lsItem {
+  position: relative;
 }

@@ -85,19 +85,22 @@ const List = () => {
                 {`${format(dates[0].startDate, "MMM dd, yyyy")} to ${format(dates[0].endDate, "MMM dd, yyyy")}`}
               </span>
               
-              {/* Use the modal approach which doesn't overlap */}
+              {/* Use dropdown positioning instead of modal */}
               {openDate && (
-                <div className="modal">
-                  <div className="modalOverlay" onClick={() => setOpenDate(false)}></div>
-                  <div className="modalContent">
-                    <button className="modalClose" onClick={() => setOpenDate(false)}>×</button>
-                    <DateRange
-                      editableDateInputs={true}
-                      onChange={(item) => setDates([item.selection])}
-                      minDate={new Date()}
-                      ranges={dates}
-                    />
-                  </div>
+                <div className="datePickerDropdown">
+                  <button 
+                    onClick={() => setOpenDate(false)} 
+                    className="dateCloseBtn"
+                    aria-label="Close date picker"
+                  >
+                    ×
+                  </button>
+                  <DateRange
+                    editableDateInputs={true}
+                    onChange={(item) => setDates([item.selection])}
+                    minDate={new Date()}
+                    ranges={dates}
+                  />
                 </div>
               )}
             </div>

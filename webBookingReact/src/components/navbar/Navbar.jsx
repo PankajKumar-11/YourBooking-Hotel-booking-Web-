@@ -3,7 +3,7 @@ import './Navbar.css'
 import {Link, useNavigate} from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
 
-// Keep the helper functions as is
+// Keep helper functions
 export const getAvatarColor = (username) => {
   try {
     if (!username) return "#0071c2";
@@ -35,49 +35,53 @@ const Navbar = () => {
   return (
     <div className='navbar'>
       <div className="navContainer">
-        <div className="leftSection">
-          <Link to="/" className="logo">
-            YourBooking
-          </Link>
-        </div>
+        {/* Logo aligned with navigation */}
+        <Link to="/" className="logo">
+          YourBooking
+        </Link>
         
-        <div className="centerSection">
-          <div className="navItem active">
+        {/* Navigation items */}
+        <div className="navLinks">
+          <div className="navLink active">
+            <span className="navIcon">🛏️</span>
             <span>Stays</span>
           </div>
-          <div className="navItem">
+          <div className="navLink">
+            <span className="navIcon">✈️</span>
             <span>Flights</span>
           </div>
-          <div className="navItem">
+          <div className="navLink">
+            <span className="navIcon">🚗</span>
             <span>Car Rentals</span>
+          </div>
+          <div className="navLink">
+            <span className="navIcon">🏛️</span>
+            <span>Attractions</span>
+          </div>
+          <div className="navLink">
+            <span className="navIcon">🚕</span>
+            <span>Airport Taxis</span>
           </div>
         </div>
         
-        <div className="rightSection">
-          {user ? (
-            <div className="userControls">
-              <div 
-                className="userAvatar" 
-                style={{backgroundColor: user && user.username ? getAvatarColor(user.username) : "#0071c2"}}
-              >
-                {user && user.username ? getInitial(user.username) : "G"}
-              </div>
-              <span className="username">{user?.username || "Guest"}</span>
-              <button className="logoutBtn" onClick={handleLogout}>
-                Logout
-              </button>
-            </div>
-          ) : (
-            <div className="authButtons">
-              <button className="navButton" onClick={() => navigate("/login?register=true")}>
-                Register
-              </button>
-              <button className="navButton" onClick={() => navigate("/login")}>
-                Login
-              </button>
-            </div>
-          )}
-        </div>
+        {/* User controls */}
+        {user ? (
+          <div className="navItems">
+            <span className="username">{user.username}</span>
+            <button className="navButton" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className="navItems">
+            <button className="navButton" onClick={() => navigate("/login?register=true")}>
+              Register
+            </button>
+            <button className="navButton" onClick={() => navigate("/login")}>
+              Login
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )
