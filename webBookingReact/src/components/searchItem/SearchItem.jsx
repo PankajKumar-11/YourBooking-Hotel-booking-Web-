@@ -4,9 +4,19 @@ import "./SearchItem.css";
 
 const SearchItem = ({ item, nights = 1, options }) => {
   const location = useLocation();
+  
   // Calculate total price based on nights
   const totalPrice = item.cheapestPrice * nights;
   const taxAmount = Math.round(totalPrice * 0.18); // 18% tax
+  
+  // Format currency with commas
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('en-IN', { 
+      style: 'currency', 
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(price).replace('₹', '₹ ');
+  };
 
   return (
     <div className="searchItem">
@@ -21,7 +31,7 @@ const SearchItem = ({ item, nights = 1, options }) => {
       <div className="siDesc">
         <h1 className="siTitle">{item.name}</h1>
         <div className="siLocation">
-          <span className="siDistance">{item.distance}m from center</span>
+          <span className="siDistance">{item.distance} from center</span>
           <span className="siTaxiOp">Free airport taxi</span>
         </div>
         <div className="siRoom">
@@ -81,13 +91,13 @@ const SearchItem = ({ item, nights = 1, options }) => {
               {options?.room || 1} {options?.room === 1 ? "room" : "rooms"}
             </span>
           </div>
-          <span className="siPriceTag">₹{totalPrice.toLocaleString()}</span>
+          <span className="siPriceTag">{formatPrice(totalPrice)}</span>
           <span className="siTaxes">
-            + ₹{taxAmount.toLocaleString()} taxes and fees
+            + {formatPrice(taxAmount)} taxes and fees
           </span>
           <Link
             to={`/hotels/${item._id}`}
-            state={{ nights, dates: location?.state?.dates }}
+            state={{ nights, dates: location?.state?.dates, options }}
           >
             <button className="siAvailability">See availability</button>
           </Link>

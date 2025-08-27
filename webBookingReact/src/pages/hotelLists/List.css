@@ -11,10 +11,12 @@
   max-width: 1200px;
   display: flex;
   gap: 20px;
+  padding: 0 20px;
 }
 
 .listSearch {
   flex: 1;
+  max-width: 320px;
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
@@ -36,6 +38,7 @@
   flex-direction: column;
   gap: 8px;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .lsItem label {
@@ -76,6 +79,16 @@
   background-color: #eff6fc;
 }
 
+.dateSelector {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  z-index: 2;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
 .lsOptions {
   padding: 15px;
   border-radius: 5px;
@@ -105,7 +118,7 @@
   text-align: center;
 }
 
-.listSearch button {
+.searchBtn {
   padding: 14px;
   background-color: #0071c2;
   color: white;
@@ -119,9 +132,35 @@
   margin-top: 10px;
 }
 
-.listSearch button:hover {
+.searchBtn:hover {
   background-color: #005fa3;
   transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.searchBtn:active {
+  transform: translateY(0);
+}
+
+.nightSummary {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #e8f4fd;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.nightCount {
+  font-weight: bold;
+  font-size: 16px;
+  color: #0071c2;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.dateSummary {
+  font-size: 13px;
+  color: #666;
 }
 
 .listResult {
@@ -201,4 +240,17 @@
 
 .errorContainer button:hover {
   background-color: #005fa3;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .listWrapper {
+    flex-direction: column;
+  }
+  
+  .listSearch {
+    max-width: 100%;
+    position: static;
+    margin-bottom: 20px;
+  }
 }

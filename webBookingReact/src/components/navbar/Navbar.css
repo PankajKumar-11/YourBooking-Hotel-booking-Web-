@@ -12,37 +12,116 @@
 
 
 
-.navbar{
-    height: 60px;
-    background-color: #003580;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 10px;
+.navbar {
+  height: 60px;
+  background-color: #003580;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
-.nav-Container{
-    width: 100%;
-    max-width: 1024px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: white;
+.navContainer {
+  width: 100%;
+  max-width: 1200px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 
-.logo{
-    padding: 15px 0px;
-  font-weight: 400;
-  font-size: 2rem;
+.logo {
+  font-weight: 700;
+  font-size: 24px;
   color: white;
   text-decoration: none;
-
 }
 
-.navButton{
-margin-left: 20px;
-padding: 8px 15px;
-color: #003580;
-border: none ;
-cursor: pointer;
+.userControls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.userAvatar:hover {
+  transform: scale(1.05);
+}
+
+.username {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.logoutBtn {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+
+.logoutBtn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.logoutBtn:active {
+  transform: translateY(1px);
+}
+
+.navItems {
+  display: flex;
+  gap: 10px;
+}
+
+.navButton {
+  margin-left: 10px;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.navItems .navButton:first-child {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid white;
+}
+
+.navItems .navButton:last-child {
+  background-color: white;
+  color: #003580;
+}
+
+.navButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }

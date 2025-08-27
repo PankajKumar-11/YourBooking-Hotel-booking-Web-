@@ -15,16 +15,22 @@ const Navbar = () => {
 
   return (
     <div className='navbar'>
-      <div className="nav-Container">
+      <div className="navContainer">
         <Link to="/" className="logo">
           YourBooking
         </Link>
-        
-       
         {user ? (
-          <div className="navItems">
-            <span>{user.username}</span>
-            <button className="navButton" onClick={handleLogout}>
+          <div className="userControls">
+            <div className="userInfo">
+              <div 
+                className="userAvatar" 
+                style={{backgroundColor: getAvatarColor(user.username)}}
+              >
+                {getInitial(user.username)}
+              </div>
+              <span className="username">{user.username}</span>
+            </div>
+            <button className="logoutBtn" onClick={handleLogout}>
               Logout
             </button>
           </div>

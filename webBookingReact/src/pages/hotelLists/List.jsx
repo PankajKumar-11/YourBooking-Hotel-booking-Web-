@@ -7,14 +7,13 @@ import { format, differenceInDays } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 import useFetch from "../../hooks/useFetch";
-import { toast } from "react-toastify";
 
 const List = () => {
   const location = useLocation();
   const [destination, setDestination] = useState(location.state?.Destination || "");
   const [dates, setDates] = useState(location.state?.dates || [{
     startDate: new Date(),
-    endDate: new Date(),
+    endDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
     key: "selection",
   }]);
   const [openDate, setOpenDate] = useState(false);
@@ -52,7 +51,6 @@ const List = () => {
       max: max,
     });
     setOpenDate(false);
-    toast.info("Updating search results...");
   };
   
   const { data, loading, error, reFetch } = useFetch(
@@ -63,7 +61,7 @@ const List = () => {
   useEffect(() => {
     reFetch();
   }, [searchParams]);
-  
+
   return (
     <div>
       <Navbar />
@@ -84,13 +82,17 @@ const List = () => {
             <div className="lsItem">
               <label>Check-in Date</label>
               <span onClick={() => setOpenDate(!openDate)}>
-                {`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(dates[0].endDate, "MM/dd/yyyy")} · ${nightCount} ${nightCount === 1 ? 'night' : 'nights'}`}
+                {`${format(dates[0].startDate, "MMM dd, yyyy")} to ${format(dates[0].endDate, "MMM dd, yyyy")}`}
               </span>
               {openDate && (
                 <DateRange
+                  editableDateInputs={true}
                   onChange={(item) => setDates([item.selection])}
                   minDate={new Date()}
                   ranges={dates}
+                  className="dateSelector"
+                  months={1}
+                  direction="horizontal"
                 />
               )}
             </div>
@@ -105,7 +107,7 @@ const List = () => {
                     type="number" 
                     className="lsOptionInput" 
                     value={min}
-                    onChange={(e) => setMin(e.target.value)}
+                    onChange={(e) => setMin(parseInt(e.target.value))}
                   />
                 </div>
                 <div className="lsOptionItem">
@@ -116,7 +118,7 @@ const List = () => {
                     type="number" 
                     className="lsOptionInput" 
                     value={max}
-                    onChange={(e) => setMax(e.target.value)}
+                    onChange={(e) => setMax(parseInt(e.target.value))}
                   />
                 </div>
                 <div className="lsOptionItem">
@@ -125,10 +127,9 @@ const List = () => {
                     type="number"
                     min={1}
                     className="lsOptionInput"
-                    placeholder={options.adult}
                     value={options.adult}
                     onChange={(e) => 
-                      setOptions({...options, adult: e.target.value})
+                      setOptions({...options, adult: parseInt(e.target.value)})
                     }
                   />
                 </div>
@@ -138,10 +139,9 @@ const List = () => {
                     type="number"
                     min={0}
                     className="lsOptionInput"
-                    placeholder={options.children}
                     value={options.children}
                     onChange={(e) => 
-                      setOptions({...options, children: e.target.value})
+                      setOptions({...options, children: parseInt(e.target.value)})
                     }
                   />
                 </div>
@@ -151,17 +151,25 @@ const List = () => {
                     type="number"
                     min={1}
                     className="lsOptionInput"
-                    placeholder={options.room}
                     value={options.room}
                     onChange={(e) => 
-                      setOptions({...options, room: e.target.value})
+                      setOptions({...options, room: parseInt(e.target.value)})
                     }
                   />
                 </div>
               </div>
             </div>
             <button onClick={handleSearch} className="searchBtn">Search</button>
+            
+            {/* Night count indicator */}
+            <div className="nightSummary">
+              <span className="nightCount">{nightCount} {nightCount === 1 ? 'night' : 'nights'}</span>
+              <span className="dateSummary">
+                {format(dates[0].startDate, "MMM dd")} - {format(dates[0].endDate, "MMM dd, yyyy")}
+              </span>
+            </div>
           </div>
+          
           <div className="listResult">
             {loading ? (
               <div className="loadingContainer">
@@ -187,7 +195,7 @@ const List = () => {
             ) : (
               <div className="noResultsContainer">
                 <div className="noResultsIcon">🔍</div>
-                <h3>No hotels found in {destination}</h3>
+                <h3>No hotels found in {destination || "this location"}</h3>
                 <p>Try changing your search criteria or exploring different destinations</p>
               </div>
             )}
