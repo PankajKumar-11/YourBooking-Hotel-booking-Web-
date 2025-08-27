@@ -1,4 +1,6 @@
 /* SearchItem.css */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
 .searchItem {
   border: none;
   padding: 15px;
@@ -11,6 +13,7 @@
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
+  font-family: "Ubuntu", "Segoe UI", Roboto, sans-serif;
 }
 
 .searchItem:hover {
@@ -132,18 +135,23 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: flex-end;
+  min-width: 220px;
+  padding-left: 10px;
 }
 
 .siQuality {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
+  width: 100%;
+  gap: 15px;
 }
 
 .siReview {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
 }
 
 .reviewText {
@@ -170,26 +178,27 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  width: 100%;
 }
 
 .stayDetails {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  width: 100%;
+  margin-bottom: 5px;
 }
 
-.siStay {
-  font-size: 13px;
-  color: #333;
-}
-
-.roomCount {
-  font-size: 12px;
-  color: #777;
+.priceContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .siPriceTag {
-  font-size: 20px;
+  font-size: 22px;
   color: #000;
   font-weight: 600;
   margin-top: 5px;
@@ -198,7 +207,12 @@
 .siTaxes {
   font-size: 12px;
   color: #777;
-  margin-bottom: 10px;
+  margin-top: 2px;
+}
+
+.availabilityLink {
+  width: 100%;
+  text-decoration: none;
 }
 
 .siAvailability {
@@ -206,13 +220,17 @@
   color: white;
   font-weight: 600;
   border: none;
-  padding: 10px 18px;
+  padding: 12px 0;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 14px;
+  width: 100%;
+  text-align: center;
 }
 
 .siAvailability:hover {
   background-color: #005fa3;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }

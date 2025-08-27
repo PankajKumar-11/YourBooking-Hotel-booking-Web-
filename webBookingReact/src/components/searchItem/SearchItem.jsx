@@ -91,13 +91,16 @@ const SearchItem = ({ item, nights = 1, options }) => {
               {options?.room || 1} {options?.room === 1 ? "room" : "rooms"}
             </span>
           </div>
-          <span className="siPriceTag">{formatPrice(totalPrice)}</span>
-          <span className="siTaxes">
-            + {formatPrice(taxAmount)} taxes and fees
-          </span>
+          <div className="priceContainer">
+            <span className="siPriceTag">{formatPrice(totalPrice)}</span>
+            <span className="siTaxes">
+              + {formatPrice(taxAmount)} taxes and fees
+            </span>
+          </div>
           <Link
             to={`/hotels/${item._id}`}
             state={{ nights, dates: location?.state?.dates, options }}
+            className="availabilityLink"
           >
             <button className="siAvailability">See availability</button>
           </Link>

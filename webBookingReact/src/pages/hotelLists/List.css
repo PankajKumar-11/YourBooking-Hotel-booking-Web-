@@ -1,9 +1,13 @@
+/* Add font import for consistency */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
 .listContainer {
   display: flex;
   justify-content: center;
   margin-top: 20px;
   background-color: #f5f5f5;
   padding: 20px 0;
+  font-family: "Ubuntu", "Segoe UI", Roboto, sans-serif;
 }
 
 .listWrapper {
@@ -79,14 +83,59 @@
   background-color: #eff6fc;
 }
 
-.dateSelector {
+.dateToggle {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.dateToggle:hover {
+  background-color: #e9f0f7;
+}
+
+.datePickerWrapper {
   position: absolute;
-  top: 70px;
+  top: 80px;
   left: 0;
-  z-index: 2;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  background-color: white;
   border-radius: 8px;
-  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  z-index: 12;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  transition: all 0.2s;
+  line-height: 1;
+}
+
+.closeBtn:hover {
+  background-color: #ddd;
+  color: #333;
+}
+
+.dateSelector {
+  border: none;
 }
 
 .lsOptions {
