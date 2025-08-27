@@ -84,25 +84,34 @@ const List = () => {
               <span onClick={() => setOpenDate(!openDate)} className="dateToggle">
                 {`${format(dates[0].startDate, "MMM dd, yyyy")} to ${format(dates[0].endDate, "MMM dd, yyyy")}`}
               </span>
+              
+              {/* Add overlay and fixed positioning to prevent overlapping */}
               {openDate && (
-                <div className="datePickerWrapper">
-                  <button 
-                    onClick={() => setOpenDate(false)} 
-                    className="closeBtn"
-                    aria-label="Close date picker"
-                  >
-                    ×
-                  </button>
-                  <DateRange
-                    editableDateInputs={true}
-                    onChange={(item) => setDates([item.selection])}
-                    minDate={new Date()}
-                    ranges={dates}
-                    className="dateSelector"
-                    months={1}
-                    direction="horizontal"
-                  />
-                </div>
+                <>
+                  <div className="datePickerOverlay" onClick={() => setOpenDate(false)}></div>
+                  <div className="datePickerWrapper">
+                    <button 
+                      onClick={() => setOpenDate(false)} 
+                      className="closeBtn"
+                      aria-label="Close date picker"
+                    >
+                      ×
+                    </button>
+                    <DateRange
+                      editableDateInputs={true}
+                      onChange={(item) => {
+                        setDates([item.selection]);
+                        // Auto close after date selection (optional)
+                        // setOpenDate(false);
+                      }}
+                      minDate={new Date()}
+                      ranges={dates}
+                      className="dateSelector"
+                      months={1}
+                      direction="horizontal"
+                    />
+                  </div>
+                </>
               )}
             </div>
             <div className="lsItem">

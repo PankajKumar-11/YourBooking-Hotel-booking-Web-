@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import './Navbar.css'
 import {Link, useNavigate} from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
@@ -30,7 +30,8 @@ const Navbar = () => {
   
     const { user, dispatch } = useContext(AuthContext);
     const navigate = useNavigate();
-    
+    const [activeNav, setActiveNav] = useState('');
+
     const handleLogout = () => {
       dispatch({ type: "LOGOUT" });
       navigate("/");
@@ -43,6 +44,17 @@ const Navbar = () => {
         <Link to="/" className="logo">
           YourBooking
         </Link>
+        <div className="navItems">
+          <div className={`navItem ${activeNav === 'stays' ? 'active' : ''}`} onClick={() => setActiveNav('stays')}>
+            <span>Stays</span>
+          </div>
+          <div className={`navItem ${activeNav === 'flights' ? 'active' : ''}`} onClick={() => setActiveNav('flights')}>
+            <span>Flights</span>
+          </div>
+          <div className={`navItem ${activeNav === 'cars' ? 'active' : ''}`} onClick={() => setActiveNav('cars')}>
+            <span>Car Rentals</span>
+          </div>
+        </div>
         {user ? (
           <div className="userControls">
             <div className="userInfo">
