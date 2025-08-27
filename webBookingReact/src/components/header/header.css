@@ -74,6 +74,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    position: relative; /* Add for better positioning context */
 }
 
 .headerSearchInput{
@@ -88,8 +89,12 @@
 
 .date{
     position: absolute;
-    top:60px;
-    z-index: 2;
+    top: 50px; /* Adjusted position */
+    left: 0; /* Align to left */
+    z-index: 999; /* Higher z-index to stay above other elements */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 5px;
 }
 
 .options{
@@ -128,4 +133,33 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+/* For the date picker in List.jsx */
+.datePickerDropdown {
+  position: absolute;
+  top: 50px;
+  left: 0; /* Align to left */
+  z-index: 999;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Add a close button for better UX */
+.date-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 1000;
 }

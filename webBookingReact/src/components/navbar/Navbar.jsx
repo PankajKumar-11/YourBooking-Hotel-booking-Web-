@@ -3,7 +3,6 @@ import './Navbar.css'
 import {Link, useNavigate} from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
 
-// Keep helper functions
 export const getAvatarColor = (username) => {
   try {
     if (!username) return "#0071c2";
@@ -35,36 +34,11 @@ const Navbar = () => {
   return (
     <div className='navbar'>
       <div className="navContainer">
-        {/* Logo aligned with navigation */}
         <Link to="/" className="logo">
           YourBooking
         </Link>
         
-        {/* Navigation items */}
-        <div className="navLinks">
-          <div className="navLink active">
-            <span className="navIcon">🛏️</span>
-            <span>Stays</span>
-          </div>
-          <div className="navLink">
-            <span className="navIcon">✈️</span>
-            <span>Flights</span>
-          </div>
-          <div className="navLink">
-            <span className="navIcon">🚗</span>
-            <span>Car Rentals</span>
-          </div>
-          <div className="navLink">
-            <span className="navIcon">🏛️</span>
-            <span>Attractions</span>
-          </div>
-          <div className="navLink">
-            <span className="navIcon">🚕</span>
-            <span>Airport Taxis</span>
-          </div>
-        </div>
-        
-        {/* User controls */}
+        {/* Only keep user controls */}
         {user ? (
           <div className="navItems">
             <span className="username">{user.username}</span>

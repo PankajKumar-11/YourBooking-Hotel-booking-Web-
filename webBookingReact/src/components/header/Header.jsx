@@ -64,23 +64,23 @@ const Header = ({type}) => {
       <div className={type === "list" ? "header-Container listMode":"header-Container"}>
         <div className="headerList">
           <div className="headerListItem active">
-            <FontAwesomeIcon icon={faBed} />
+            <span className="headerIcon">🏠</span>
             <span>Stays</span>
           </div>
-          <div className="headerListItem ">
-            <FontAwesomeIcon icon={faPlane} />
+          <div className="headerListItem">
+            <span className="headerIcon">✈️</span>
             <span>Flights</span>
           </div>
           <div className="headerListItem">
-            <FontAwesomeIcon icon={faCar} />
+            <span className="headerIcon">🚗</span>
             <span>Car Rentals</span>
           </div>
           <div className="headerListItem">
-            <FontAwesomeIcon icon={faBed} />
+            <span className="headerIcon">🏛️</span>
             <span>Attractions</span>
           </div>
           <div className="headerListItem">
-            <FontAwesomeIcon icon={faTaxi} />
+            <span className="headerIcon">🚕</span>
             <span>Airport Taxis</span>
           </div>
         </div>
@@ -115,14 +115,22 @@ const Header = ({type}) => {
                   "dd/MM/yyyy"
                 )}`}</span>
                 {openDate && (
-                  <DateRange
-                    editableDateInputs={true}
-                    onChange={(item) => setDates([item.selection])}
-                    moveRangeOnFirstSelection={false}
-                    ranges={dates}
-                    className="date"
-                    minDate={new Date()}
-                  />
+                  <div className="date-container">
+                    <button 
+                      className="date-close-btn" 
+                      onClick={() => setOpenDate(false)}
+                    >
+                      ×
+                    </button>
+                    <DateRange
+                      editableDateInputs={true}
+                      onChange={(item) => setDates([item.selection])}
+                      moveRangeOnFirstSelection={false}
+                      ranges={dates}
+                      className="date"
+                      minDate={new Date()}
+                    />
+                  </div>
                 )}
               </div>
               <div className="headerSearchItem">
