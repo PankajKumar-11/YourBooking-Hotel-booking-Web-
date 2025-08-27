@@ -25,6 +25,15 @@
   padding: 0 20px;
 }
 
+.logo {
+  font-weight: 700;
+  font-size: 24px;
+  color: white;
+  text-decoration: none;
+  padding-left: 0;
+  margin-right: auto;
+}
+
 /* Three-section layout for better alignment */
 .leftSection, .centerSection, .rightSection {
   display: flex;
@@ -45,13 +54,6 @@
 .rightSection {
   flex: 1;
   justify-content: flex-end;
-}
-
-.logo {
-  font-weight: 700;
-  font-size: 24px;
-  color: white;
-  text-decoration: none;
 }
 
 .navItem {

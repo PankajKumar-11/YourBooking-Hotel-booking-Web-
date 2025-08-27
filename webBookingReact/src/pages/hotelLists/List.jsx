@@ -85,7 +85,7 @@ const List = () => {
                 {`${format(dates[0].startDate, "MMM dd, yyyy")} to ${format(dates[0].endDate, "MMM dd, yyyy")}`}
               </span>
               
-              {/* Simple modal approach for date picker */}
+              {/* Use the modal approach which doesn't overlap */}
               {openDate && (
                 <div className="modal">
                   <div className="modalOverlay" onClick={() => setOpenDate(false)}></div>
