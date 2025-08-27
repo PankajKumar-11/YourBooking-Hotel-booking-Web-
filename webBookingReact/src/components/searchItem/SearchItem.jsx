@@ -1,51 +1,95 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./SearchItem.css";
-const SearchItem = ({ item }) => {
+
+const SearchItem = ({ item, nights = 1, options }) => {
+  const location = useLocation();
+  // Calculate total price based on nights
+  const totalPrice = item.cheapestPrice * nights;
+  const taxAmount = Math.round(totalPrice * 0.18); // 18% tax
+
   return (
     <div className="searchItem">
-      <img className="siImg" src={item.photos[0]} />
-      <div className="siDisc">
+      <div className="siImg">
+        <img
+          src={item.photos?.[0] || "https://cf.bstatic.com/xdata/images/hotel/square600/261707778.webp?k=fa6b6128468ec15e81f7d076b6f2473fa3a80c255582f155cae35f9edbffdd78&o="}
+          alt={item.name}
+        />
+        {item.featured && <div className="featuredTag">Featured</div>}
+      </div>
+
+      <div className="siDesc">
         <h1 className="siTitle">{item.name}</h1>
         <div className="siLocation">
-          <span className="siDistance">{item.distance}</span>
-          <span className="siTaxiOp">Subway Access</span>
+          <span className="siDistance">{item.distance}m from center</span>
+          <span className="siTaxiOp">Free airport taxi</span>
         </div>
         <div className="siRoom">
           <span className="siSubtitle">
-            {item.rooms && item.rooms.length > 0
-              ? item.rooms.map((room) => room.title).join(", ")
-              : "Room information not available"}
+            {item.roomType || "Standard Room"}
           </span>
-          <span className="siFeatures">{item.desc}</span>
+          <span className="siFeatures">
+            {item.desc?.substring(0, 100)}...
+          </span>
         </div>
         <div className="siPerks">
-          <span className="siPerksFreeBreakfast">Breakfast Included</span>
-          <span className="siPerksFreeCancel"> - Free cancellation</span>
-          <span className="siPerksNoPayment">
-            {" "}
-            - No prepayment needed – pay at the property
-          </span>
+          <div className="siPerkItem">
+            <span className="siPerksFreeBreakfast">✓ Breakfast Included</span>
+          </div>
+          <div className="siPerkItem">
+            <span className="siPerksFreeCancel">✓ Free cancellation</span>
+          </div>
+          <div className="siPerkItem">
+            <span className="siPerksNoPayment">✓ Pay at property</span>
+          </div>
         </div>
       </div>
+
       <div className="siDetails">
         {item.rating && (
           <div className="siQuality">
-            {item.review && (
-              <div className="siReview">
-                <span className="Review">Very Good</span>
-                <span className="ReviewNo">{item.review} reviews</span>
-              </div>
-            )}
+            <div className="siReview">
+              <span className="reviewText">
+                {item.rating >= 9.5
+                  ? "Exceptional"
+                  : item.rating >= 9
+                  ? "Superb"
+                  : item.rating >= 8
+                  ? "Very Good"
+                  : item.rating >= 7
+                  ? "Good"
+                  : "Average"}
+              </span>
+              <span className="reviewCount">
+                {item.review || Math.floor(Math.random() * 400) + 100} reviews
+              </span>
+            </div>
             <button className="siRating">{item.rating}</button>
           </div>
         )}
+
         <div className="siPrice">
-          <span className="siStay">1 night {item.adult} adult</span>
-          <span className="siPriceTag">₹ {item.cheapestPrice}</span>
-          <span className="siTaxes">+ ₹ 195 taxes and fees</span>
-          <Link to={`/hotels/${item._id}`}>
-            <button className="siAvailability">See availability </button>
+          <div className="stayDetails">
+            <span className="siStay">
+              <strong>
+                {nights} {nights === 1 ? "night" : "nights"}
+              </strong>
+              · {options?.adult || 1}{" "}
+              {options?.adult === 1 ? "adult" : "adults"}
+            </span>
+            <span className="roomCount">
+              {options?.room || 1} {options?.room === 1 ? "room" : "rooms"}
+            </span>
+          </div>
+          <span className="siPriceTag">₹{totalPrice.toLocaleString()}</span>
+          <span className="siTaxes">
+            + ₹{taxAmount.toLocaleString()} taxes and fees
+          </span>
+          <Link
+            to={`/hotels/${item._id}`}
+            state={{ nights, dates: location?.state?.dates }}
+          >
+            <button className="siAvailability">See availability</button>
           </Link>
         </div>
       </div>

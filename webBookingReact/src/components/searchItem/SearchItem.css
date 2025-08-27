@@ -1,117 +1,218 @@
-.searchItem{
-    border: 1px solid lightgray;
-    padding: 0.7rem;
-    display: flex;
-    margin-bottom: 0.9rem;
-    justify-content: space-between;
-    gap: 0.9rem;
-    border-radius: 0.6rem;
+/* SearchItem.css */
+.searchItem {
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
 }
 
-.siImg{
-    height: 210px;
-    width: 210px;
-    object-fit: cover;
+.searchItem:hover {
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
 }
 
-.siDisc{
-    display: flex;
-    flex-direction: column;
-    font-size: 0.8rem;
-    gap: 0.8rem;
-    flex:2
+.siImg {
+  width: 220px;
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  flex-shrink: 0;
 }
 
-.siTitle{
-    font-size: 1.4rem;
-    color: #0071c2;
+.siImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
 }
 
-.siLocation{
-    display: flex;
-    gap: 0.7rem;
+.searchItem:hover .siImg img {
+  transform: scale(1.05);
 }
 
-.siRoom{
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
+.featuredTag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #ff6b6b;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.siPerks{
-    display: flex;
-    flex-direction: column;
-    color: green;
-    font-weight: 500;
-    gap: 0.3rem;
-    font-size: 0.8rem;
+.siDesc {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 2;
 }
 
-.siSubtitle{
-    font-weight: bold;
+.siTitle {
+  font-size: 22px;
+  color: #0071c2;
+  margin: 0;
 }
 
-.siDetails{
-    flex:1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: end;
-    align-items: end;
+.siLocation {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-.siQuality{
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+.siDistance {
+  font-size: 13px;
+  color: #333;
+  background-color: #f0f8ff;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
-.siReview{
-    display: flex;
-    flex-direction: column;
+.siTaxiOp {
+  font-size: 13px;
+  background-color: #e6ffe6;
+  color: #006600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
 }
 
-.Review{
-    font-weight: 500;
-    font-size: 1rem;
-}
-.ReviewNo{
-    font-size: 0.7rem;
-    color: #555;
-}
-.siRating{
-    padding: 0.5rem 0.4rem;
-    border-radius: 0.6rem;
-    background-color: #003580;
-    color: white;
+.siRoom {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 5px;
 }
 
-.siPrice{
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
+.siSubtitle {
+  font-size: 14px;
+  font-weight: 600;
+  background-color: #ebf3ff;
+  color: #0071c2;
+  padding: 3px 8px;
+  border-radius: 4px;
+  width: fit-content;
 }
 
-.siStay{
-    font-size: 0.8rem;
-    color: #555;
+.siFeatures {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.5;
 }
 
-.siPriceTag{
-    font-size:1.45rem;
-    font-weight: 400;
-}
-.siTaxes{
-     font-size: 0.7rem;
-     color: #555;
-     margin-bottom: 0.3rem;
+.siPerks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 5px;
 }
 
-.siAvailability{
-    padding: 0.7rem 1.4rem;
-    background-color: #0071c2;
-    color: white;
-    font-weight: 500;
-    border: none;
-    border-radius: 0.4rem;
+.siPerkItem {
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+.siPerksFreeBreakfast, .siPerksFreeCancel, .siPerksNoPayment {
+  font-size: 13px;
+  color: #006600;
+}
+
+.siDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.siQuality {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.siReview {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.reviewText {
+  font-weight: 600;
+  color: #333;
+}
+
+.reviewCount {
+  font-size: 12px;
+  color: #777;
+}
+
+.siRating {
+  background-color: #003580;
+  color: white;
+  border: none;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 5px 5px 5px 0;
+  font-size: 16px;
+}
+
+.siPrice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.stayDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.siStay {
+  font-size: 13px;
+  color: #333;
+}
+
+.roomCount {
+  font-size: 12px;
+  color: #777;
+}
+
+.siPriceTag {
+  font-size: 20px;
+  color: #000;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+.siTaxes {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.siAvailability {
+  background-color: #0071c2;
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.siAvailability:hover {
+  background-color: #005fa3;
 }

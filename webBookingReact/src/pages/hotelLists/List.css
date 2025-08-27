@@ -1,88 +1,204 @@
 .listContainer {
   display: flex;
-  margin-top: 20px;
   justify-content: center;
+  margin-top: 20px;
+  background-color: #f5f5f5;
+  padding: 20px 0;
 }
 
 .listWrapper {
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   gap: 20px;
-  width: 100%;
-  max-width: 1024px;
 }
 
 .listSearch {
   flex: 1;
-  background-color: #febb02;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
   position: sticky;
-  top: 10px;
-  border-radius: 0.7rem;
-  padding: 1.1rem;
-  gap: 0.7rem;
-  display: flex;
-  flex-direction: column;
+  top: 20px;
   height: max-content;
-
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
 }
 
 .lsTitle {
-  font-size: 1.6rem;
-  color: #555;
-  margin-bottom: 0.6rem;
+  font-size: 22px;
+  color: #0071c2;
+  margin-bottom: 20px;
+  font-weight: 600;
 }
 
 .lsItem {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  font-size: 0.9rem;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.lsItem label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.lsItem > input {
+  height: 40px;
+  border: none;
+  padding: 0 10px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.lsItem > input:focus {
+  background-color: #eff6fc;
+  box-shadow: 0 0 0 2px rgba(0, 113, 194, 0.2);
 }
 
 .lsItem > span {
-  cursor: pointer;
-  background-color: white;
+  height: 40px;
+  padding: 10px;
+  background-color: #f7f7f7;
   display: flex;
   align-items: center;
-  height: 1rem;
-  padding: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #333;
+  font-size: 14px;
+  transition: all 0.3s;
 }
 
-.lsItem > label {
-  margin: 0.25rem 0;
-  font-size: 0.95rem;
+.lsItem > span:hover {
+  background-color: #eff6fc;
 }
 
-.listInput {
-  padding: 0.5rem;
-  outline: none;
+.lsOptions {
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #f7f7f7;
 }
 
 .lsOptionItem {
   display: flex;
   justify-content: space-between;
-  margin: 0.3rem 0;
-  font-size: 0.9rem;
-  color: #555;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #333;
+  align-items: center;
+}
+
+.lsOptionText small {
+  opacity: 0.7;
 }
 
 .lsOptionInput {
-  height: 1.5rem;
-  width: 3rem;
-  padding-left: 0.3rem;
+  width: 70px;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  background-color: white;
+  text-align: center;
 }
 
-.listSearch>button{
-    padding: 0.8rem;
-    background-color: #0071c2;
-    color: white;
-    border-radius: 0.6rem;
-    border: none;
-    margin-top: 0.4rem;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 0.9rem;
+.listSearch button {
+  padding: 14px;
+  background-color: #0071c2;
+  color: white;
+  border: none;
+  width: 100%;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.listSearch button:hover {
+  background-color: #005fa3;
+  transform: translateY(-2px);
 }
 
 .listResult {
   flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Loading and Error Styling */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #0071c2;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.errorContainer, .noResultsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+}
+
+.errorIcon, .noResultsIcon {
+  font-size: 32px;
+  background-color: #fff5f5;
+  color: #e74c3c;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.noResultsIcon {
+  background-color: #f0f8ff;
+  color: #0071c2;
+}
+
+.errorContainer button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #0071c2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.errorContainer button:hover {
+  background-color: #005fa3;
 }
