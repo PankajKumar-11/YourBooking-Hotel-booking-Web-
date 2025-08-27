@@ -1,3 +1,13 @@
+/* Restore Ubuntu font */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+* {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .header{
     background-color: #003580;
     color: white;
@@ -91,10 +101,11 @@
     position: absolute;
     top: 50px; /* Adjusted position */
     left: 0; /* Align to left */
-    z-index: 999; /* Higher z-index to stay above other elements */
+    z-index: 9999; /* Higher z-index to stay above other elements */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     background-color: white;
     border-radius: 5px;
+    padding: 10px;
 }
 
 .options{
