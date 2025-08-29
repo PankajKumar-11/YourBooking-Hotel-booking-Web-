@@ -367,7 +367,7 @@
   position: absolute;
   top: 50px; /* Reset to position below the input rather than above */
   left: 0;
-  z-index: 9999; /* Significantly higher z-index to appear above everything */
+  z-index: 99999 !important; /* Increase z-index */
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
@@ -385,23 +385,28 @@
   }
 }
 
-/* Make sure the close button is also above everything */
+/* Improve close button */
 .dateCloseBtn {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #f0f0f0;
+  top: 5px;
+  right: 5px;
+  background: #e74c3c; /* Red for visibility */
+  color: white;
   border: none;
-  width: 25px;
-  height: 25px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   font-size: 16px;
-  color: #333;
-  z-index: 10000; /* Even higher than the date picker */
+  z-index: 100000 !important; /* Even higher */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.dateCloseBtn:hover {
+  background-color: #c0392b;
 }
 
 /* Ensure the parent has position relative */

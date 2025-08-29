@@ -174,3 +174,42 @@
   font-size: 16px;
   z-index: 1000;
 }
+
+/* Add styles for date picker in header */
+.headerSearchItem .date {
+  position: absolute !important;
+  top: 50px !important;
+  z-index: 99999 !important; /* Match List.css */
+  background-color: white !important;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 8px !important;
+}
+
+/* Add close button for header date picker */
+.headerDateCloseBtn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 100000 !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.headerDateCloseBtn:hover {
+  background-color: #c0392b;
+}
+
+/* Ensure proper positioning context */
+.headerSearchItem {
+  position: relative !important;
+}

@@ -115,9 +115,9 @@ const Header = ({type}) => {
                   "dd/MM/yyyy"
                 )}`}</span>
                 {openDate && (
-                  <div className="date-container">
+                  <div className="dateWrapper">
                     <button 
-                      className="date-close-btn" 
+                      className="headerDateCloseBtn" 
                       onClick={() => setOpenDate(false)}
                     >
                       ×
