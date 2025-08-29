@@ -99,9 +99,9 @@
 
 .date{
     position: absolute;
-    top: 50px; /* Adjusted position */
-    left: 0; /* Align to left */
-    z-index: 9999; /* Higher z-index to stay above other elements */
+    top: 40px;
+    left: -15px;
+    z-index: 9999;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     background-color: white;
     border-radius: 5px;
@@ -293,12 +293,38 @@
   background-color: #c0392b !important;
 }
 
-/* Ensure the date picker container has proper positioning */
+/* Fix date picker container */
 .date-container {
-  position: relative !important;
+  position: relative;
 }
 
-/* Make sure the date picker itself has correct z-index */
+/* Fix date picker positioning and styling */
 .date {
-  z-index: 99998 !important;
+  position: absolute;
+  top: 40px;
+  left: -15px;
+  z-index: 9999;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+}
+
+/* Fix close button */
+.date-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10000;
 }
