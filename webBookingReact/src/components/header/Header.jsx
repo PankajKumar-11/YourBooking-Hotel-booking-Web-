@@ -116,13 +116,6 @@ const Header = ({type}) => {
                 )}`}</span>
                 {openDate && (
                   <div className="date-container">
-                    <button 
-                      className="date-close-btn" 
-                      onClick={() => setOpenDate(false)}
-                      aria-label="Close date picker"
-                    >
-                      ×
-                    </button>
                     <DateRange
                       editableDateInputs={true}
                       onChange={(item) => setDates([item.selection])}
@@ -131,6 +124,12 @@ const Header = ({type}) => {
                       className="date"
                       minDate={new Date()}
                     />
+                    <button 
+                      className="date-close-btn" 
+                      onClick={() => setOpenDate(false)}
+                    >
+                      ×
+                    </button>
                   </div>
                 )}
               </div>
