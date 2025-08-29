@@ -365,7 +365,7 @@
 
 .datePickerDropdown {
   position: absolute;
-  top: calc(100% + 10px);
+  top: -320px; /* Position above instead of below */
   left: 0;
   z-index: 1000;
   background-color: white;
@@ -374,6 +374,18 @@
   padding: 10px;
 }
 
+/* Add media query for mobile responsiveness */
+@media (max-width: 768px) {
+  .datePickerDropdown {
+    top: -320px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    max-width: 90vw;
+  }
+}
+
+/* Make sure the close button is visible */
 .dateCloseBtn {
   position: absolute;
   top: 10px;
@@ -389,6 +401,7 @@
   cursor: pointer;
   font-size: 16px;
   color: #333;
+  z-index: 1001; /* Ensure it's above the date picker */
 }
 
 .dateCloseBtn:hover {

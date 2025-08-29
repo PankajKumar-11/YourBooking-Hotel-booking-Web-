@@ -37,11 +37,17 @@ const Navbar = () => {
         <Link to="/" className="logo">
           YourBooking
         </Link>
-        
-        {/* Only keep user controls */}
         {user ? (
           <div className="navItems">
-            <span className="username">{user.username}</span>
+            <div className="userInfo">
+              <div 
+                className="userAvatar" 
+                style={{backgroundColor: getAvatarColor(user.username)}}
+              >
+                {getInitial(user.username)}
+              </div>
+              <span className="username">{user.username}</span>
+            </div>
             <button className="navButton" onClick={handleLogout}>
               Logout
             </button>
