@@ -279,14 +279,15 @@
 .date-close-btn {
   position: absolute;
   top: 10px;
-  right: 10px;
-  width: 24px;
-  height: 24px;
+  left: 10px;   /* <-- Move to left */
+  right: auto;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background-color: #e74c3c;
   color: white;
   border: none;
-  font-size: 16px;
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
