@@ -213,3 +213,92 @@
 .headerSearchItem {
   position: relative !important;
 }
+
+/* Fix date picker styling */
+
+/* Ensure proper positioning */
+.dateWrapper {
+  position: relative;
+}
+
+/* Improve the date picker styling and positioning */
+.date {
+  position: absolute !important;
+  top: 100% !important; 
+  left: 0 !important;
+  z-index: 99999 !important;
+  background-color: white !important;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 8px !important;
+  padding: 10px !important;
+  width: auto !important;
+  min-width: 600px !important;
+  pointer-events: all !important; /* Ensure clicks work */
+}
+
+/* Style the close button for better visibility */
+.headerDateCloseBtn {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  z-index: 999999 !important;
+  background-color: #e74c3c !important;
+  color: white !important;
+  width: 28px !important;
+  height: 28px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  font-size: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Enable clicking on calendar days */
+.rdrDay, .rdrDayNumber, .rdrDayStartPreview, .rdrDayEndPreview {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 100000 !important;
+}
+
+/* Make sure the header search item has proper positioning context */
+.headerSearchItem {
+  position: relative !important;
+  z-index: 9000 !important;
+}
+
+/* Fix close button positioning */
+.date-close-btn {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  background-color: #e74c3c !important;
+  color: white !important;
+  border: none !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  font-size: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 999999 !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.date-close-btn:hover {
+  background-color: #c0392b !important;
+}
+
+/* Ensure the date picker container has proper positioning */
+.date-container {
+  position: relative !important;
+}
+
+/* Make sure the date picker itself has correct z-index */
+.date {
+  z-index: 99998 !important;
+}

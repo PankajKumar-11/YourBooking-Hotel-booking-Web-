@@ -364,14 +364,15 @@
 /* Replace modal styles with dropdown styles */
 
 .datePickerDropdown {
-  position: absolute;
-  top: 50px; /* Reset to position below the input rather than above */
-  left: 0;
-  z-index: 99999 !important; /* Increase z-index */
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-  padding: 10px;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  z-index: 99999 !important;
+  background-color: white !important;
+  border-radius: 8px !important;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2) !important;
+  padding: 10px !important;
+  pointer-events: all !important;
 }
 
 /* Add media query for mobile responsiveness */
@@ -387,29 +388,80 @@
 
 /* Improve close button */
 .dateCloseBtn {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: #e74c3c; /* Red for visibility */
-  color: white;
-  border: none;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 16px;
-  z-index: 100000 !important; /* Even higher */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.dateCloseBtn:hover {
-  background-color: #c0392b;
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  background-color: #e74c3c !important; 
+  color: white !important;
+  border: none !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  font-size: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 999999 !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
 }
 
 /* Ensure the parent has position relative */
 .lsItem {
-  position: relative;
+  position: relative !important;
+  z-index: 9000 !important;
+}
+
+/* Fix date picker in the list page */
+
+/* Ensure proper positioning container */
+.datePickerDropdown {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  z-index: 99999 !important;
+  background-color: white !important;
+  border-radius: 8px !important;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2) !important;
+  padding: 10px !important;
+  pointer-events: all !important;
+}
+
+/* Make date picker controls clickable */
+.rdrCalendarWrapper, 
+.rdrDateRangeWrapper,
+.rdrMonth,
+.rdrDay, 
+.rdrDayNumber, 
+.rdrDayStartPreview, 
+.rdrDayEndPreview {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 100000 !important;
+}
+
+/* Improve close button visibility */
+.dateCloseBtn {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  background-color: #e74c3c !important; 
+  color: white !important;
+  border: none !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  font-size: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 999999 !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Ensure proper positioning context */
+.lsItem {
+  position: relative !important;
+  z-index: 9000 !important;
 }

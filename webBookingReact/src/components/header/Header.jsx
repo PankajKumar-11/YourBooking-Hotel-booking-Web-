@@ -115,10 +115,11 @@ const Header = ({type}) => {
                   "dd/MM/yyyy"
                 )}`}</span>
                 {openDate && (
-                  <div className="dateWrapper">
+                  <div className="date-container">
                     <button 
-                      className="headerDateCloseBtn" 
+                      className="date-close-btn" 
                       onClick={() => setOpenDate(false)}
+                      aria-label="Close date picker"
                     >
                       ×
                     </button>
