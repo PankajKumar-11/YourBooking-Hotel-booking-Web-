@@ -110,7 +110,7 @@ const Header = ({type}) => {
                 <span
                   onClick={() => {
                     setOpenDate(!openDate);
-                    setOpenOptions(false); // Close options when opening date picker
+                    setOpenOptions(false);
                   }}
                   className="headerSearchText"
                 >{`${format(dates[0].startDate, "dd/MM/yyyy")} to ${format(
