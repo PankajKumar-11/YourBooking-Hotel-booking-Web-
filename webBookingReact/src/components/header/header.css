@@ -293,3 +293,61 @@
   cursor: pointer;
   z-index: 10000;
 }
+
+/* Ensure each search item is relatively positioned */
+.headerSearchItem {
+  position: relative;
+}
+
+/* Date picker dropdown */
+.date-container {
+  position: absolute;
+  top: 48px; /* space below the input */
+  left: 0;
+  z-index: 20;
+}
+
+/* Options dropdown */
+.options {
+  position: absolute;
+  top: 48px; /* space below the input */
+  left: 0;
+  z-index: 10;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  padding: 24px 32px 24px 24px;
+  min-width: 260px;
+}
+
+/* Date picker styling */
+.date {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  padding: 16px 16px 32px 16px;
+}
+
+/* Close button in top right of date picker */
+.date-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+}
+
+/* Add space between pickers */
+.headerSearchItem + .headerSearchItem {
+  margin-left: 16px;
+}

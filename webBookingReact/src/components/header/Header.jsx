@@ -124,9 +124,10 @@ const Header = ({type}) => {
                       className="date"
                       minDate={new Date()}
                     />
-                    <button 
-                      className="date-close-btn" 
+                    <button
+                      className="date-close-btn"
                       onClick={() => setOpenDate(false)}
+                      aria-label="Close date picker"
                     >
                       ×
                     </button>
