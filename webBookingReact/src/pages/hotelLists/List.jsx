@@ -17,6 +17,7 @@ const List = () => {
     key: "selection",
   }]);
   const [openDate, setOpenDate] = useState(false);
+  const [openOptions, setOpenOptions] = useState(false); // <-- Add this
   const [options, setOptions] = useState(location.state?.options || {
     adult: 1,
     children: 0,
@@ -81,11 +82,15 @@ const List = () => {
             </div>
             <div className="lsItem">
               <label>Check-in Date</label>
-              <span onClick={() => setOpenDate(!openDate)} className="dateToggle">
+              <span
+                onClick={() => {
+                  setOpenDate(!openDate);
+                  setOpenOptions(false); // <-- Close options when opening date picker
+                }}
+                className="dateToggle"
+              >
                 {`${format(dates[0].startDate, "MMM dd, yyyy")} to ${format(dates[0].endDate, "MMM dd, yyyy")}`}
               </span>
-              
-              {/* Use dropdown positioning instead of modal */}
               {openDate && (
                 <div className="datePickerDropdown">
                   <button 
@@ -106,66 +111,78 @@ const List = () => {
             </div>
             <div className="lsItem">
               <label>Options</label>
-              <div className="lsOptions">
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">
-                    Min price <small>per night</small>
-                  </span>
-                  <input 
-                    type="number" 
-                    className="lsOptionInput" 
-                    value={min}
-                    onChange={(e) => setMin(parseInt(e.target.value))}
-                  />
+              <span
+                onClick={() => {
+                  setOpenOptions(!openOptions);
+                  setOpenDate(false); // <-- Close date picker when opening options
+                }}
+                className="optionsToggle"
+                style={{ cursor: "pointer", display: "inline-block", marginBottom: "8px" }}
+              >
+                Show Options
+              </span>
+              {openOptions && (
+                <div className="lsOptions">
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">
+                      Min price <small>per night</small>
+                    </span>
+                    <input 
+                      type="number" 
+                      className="lsOptionInput" 
+                      value={min}
+                      onChange={(e) => setMin(parseInt(e.target.value))}
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">
+                      Max price <small>per night</small>
+                    </span>
+                    <input 
+                      type="number" 
+                      className="lsOptionInput" 
+                      value={max}
+                      onChange={(e) => setMax(parseInt(e.target.value))}
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Adult</span>
+                    <input
+                      type="number"
+                      min={1}
+                      className="lsOptionInput"
+                      value={options.adult}
+                      onChange={(e) => 
+                        setOptions({...options, adult: parseInt(e.target.value)})
+                      }
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Children</span>
+                    <input
+                      type="number"
+                      min={0}
+                      className="lsOptionInput"
+                      value={options.children}
+                      onChange={(e) => 
+                        setOptions({...options, children: parseInt(e.target.value)})
+                      }
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Room</span>
+                    <input
+                      type="number"
+                      min={1}
+                      className="lsOptionInput"
+                      value={options.room}
+                      onChange={(e) => 
+                        setOptions({...options, room: parseInt(e.target.value)})
+                      }
+                    />
+                  </div>
                 </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">
-                    Max price <small>per night</small>
-                  </span>
-                  <input 
-                    type="number" 
-                    className="lsOptionInput" 
-                    value={max}
-                    onChange={(e) => setMax(parseInt(e.target.value))}
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Adult</span>
-                  <input
-                    type="number"
-                    min={1}
-                    className="lsOptionInput"
-                    value={options.adult}
-                    onChange={(e) => 
-                      setOptions({...options, adult: parseInt(e.target.value)})
-                    }
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Children</span>
-                  <input
-                    type="number"
-                    min={0}
-                    className="lsOptionInput"
-                    value={options.children}
-                    onChange={(e) => 
-                      setOptions({...options, children: parseInt(e.target.value)})
-                    }
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Room</span>
-                  <input
-                    type="number"
-                    min={1}
-                    className="lsOptionInput"
-                    value={options.room}
-                    onChange={(e) => 
-                      setOptions({...options, room: parseInt(e.target.value)})
-                    }
-                  />
-                </div>
-              </div>
+              )}
             </div>
             <button onClick={handleSearch} className="searchBtn">Search</button>
             
