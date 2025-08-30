@@ -340,20 +340,24 @@
   z-index: 100;
 }
 
-/* Options dropdown */
+.headerSearchItem {
+  position: relative;
+}
+
 .options {
-  position: absolute;
-  top: 48px;
-  left: 0;
-  z-index: 10;
+  position: static; /* Not absolute, so always visible */
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0,0,0,0.15);
   padding: 24px 32px 24px 24px;
   min-width: 260px;
+  margin-top: 8px;
+  z-index: 20;
 }
 
-/* Add space between pickers */
-.headerSearchItem + .headerSearchItem {
-  margin-left: 16px;
+.date-container {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  z-index: 30; /* Higher than options */
 }
