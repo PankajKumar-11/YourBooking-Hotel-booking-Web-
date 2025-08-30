@@ -109,78 +109,89 @@ const List = () => {
                 </div>
               )}
             </div>
-            <div className="lsItem">
+            <div className="lsItem" style={{ position: "relative" }}>
               <label>Options</label>
               <span
-                onClick={() => {
-                  setOpenOptions(!openOptions);
-                  setOpenDate(false); // <-- Close date picker when opening options
-                }}
                 className="optionsToggle"
-                style={{ cursor: "pointer", display: "inline-block", marginBottom: "8px" }}
+                style={{ cursor: "default", display: "inline-block", marginBottom: "8px" }}
               >
                 Show Options
               </span>
-              {openOptions && (
-                <div className="lsOptions">
-                  <div className="lsOptionItem">
-                    <span className="lsOptionText">
-                      Min price <small>per night</small>
-                    </span>
-                    <input 
-                      type="number" 
-                      className="lsOptionInput" 
-                      value={min}
-                      onChange={(e) => setMin(parseInt(e.target.value))}
-                    />
-                  </div>
-                  <div className="lsOptionItem">
-                    <span className="lsOptionText">
-                      Max price <small>per night</small>
-                    </span>
-                    <input 
-                      type="number" 
-                      className="lsOptionInput" 
-                      value={max}
-                      onChange={(e) => setMax(parseInt(e.target.value))}
-                    />
-                  </div>
-                  <div className="lsOptionItem">
-                    <span className="lsOptionText">Adult</span>
-                    <input
-                      type="number"
-                      min={1}
-                      className="lsOptionInput"
-                      value={options.adult}
-                      onChange={(e) => 
-                        setOptions({...options, adult: parseInt(e.target.value)})
-                      }
-                    />
-                  </div>
-                  <div className="lsOptionItem">
-                    <span className="lsOptionText">Children</span>
-                    <input
-                      type="number"
-                      min={0}
-                      className="lsOptionInput"
-                      value={options.children}
-                      onChange={(e) => 
-                        setOptions({...options, children: parseInt(e.target.value)})
-                      }
-                    />
-                  </div>
-                  <div className="lsOptionItem">
-                    <span className="lsOptionText">Room</span>
-                    <input
-                      type="number"
-                      min={1}
-                      className="lsOptionInput"
-                      value={options.room}
-                      onChange={(e) => 
-                        setOptions({...options, room: parseInt(e.target.value)})
-                      }
-                    />
-                  </div>
+              <div className="lsOptions">
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">
+                    Min price <small>per night</small>
+                  </span>
+                  <input 
+                    type="number" 
+                    className="lsOptionInput" 
+                    value={min}
+                    onChange={(e) => setMin(parseInt(e.target.value))}
+                  />
+                </div>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">
+                    Max price <small>per night</small>
+                  </span>
+                  <input 
+                    type="number" 
+                    className="lsOptionInput" 
+                    value={max}
+                    onChange={(e) => setMax(parseInt(e.target.value))}
+                  />
+                </div>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">Adult</span>
+                  <input
+                    type="number"
+                    min={1}
+                    className="lsOptionInput"
+                    value={options.adult}
+                    onChange={(e) => 
+                      setOptions({...options, adult: parseInt(e.target.value)})
+                    }
+                  />
+                </div>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">Children</span>
+                  <input
+                    type="number"
+                    min={0}
+                    className="lsOptionInput"
+                    value={options.children}
+                    onChange={(e) => 
+                      setOptions({...options, children: parseInt(e.target.value)})
+                    }
+                  />
+                </div>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">Room</span>
+                  <input
+                    type="number"
+                    min={1}
+                    className="lsOptionInput"
+                    value={options.room}
+                    onChange={(e) => 
+                      setOptions({...options, room: parseInt(e.target.value)})
+                    }
+                  />
+                </div>
+              </div>
+              {openDate && (
+                <div className="datePickerDropdown" style={{ zIndex: 100, position: "absolute", top: 0, left: 0, width: "100%" }}>
+                  <button 
+                    onClick={() => setOpenDate(false)} 
+                    className="dateCloseBtn"
+                    aria-label="Close date picker"
+                  >
+                    ×
+                  </button>
+                  <DateRange
+                    editableDateInputs={true}
+                    onChange={(item) => setDates([item.selection])}
+                    minDate={new Date()}
+                    ranges={dates}
+                  />
                 </div>
               )}
             </div>
