@@ -113,7 +113,7 @@ const List = () => {
               <label>Options</label>
               <span
                 className="optionsToggle"
-                style={{ cursor: "default", display: "inline-block", marginBottom: "8px" }}
+                onClick={() => setOpenOptions(!openOptions)}
               >
                 Show Options
               </span>
@@ -177,23 +177,6 @@ const List = () => {
                   />
                 </div>
               </div>
-              {openDate && (
-                <div className="datePickerDropdown" style={{ zIndex: 100, position: "absolute", top: 0, left: 0, width: "100%" }}>
-                  <button 
-                    onClick={() => setOpenDate(false)} 
-                    className="dateCloseBtn"
-                    aria-label="Close date picker"
-                  >
-                    ×
-                  </button>
-                  <DateRange
-                    editableDateInputs={true}
-                    onChange={(item) => setDates([item.selection])}
-                    minDate={new Date()}
-                    ranges={dates}
-                  />
-                </div>
-              )}
             </div>
             <button onClick={handleSearch} className="searchBtn">Search</button>
             
@@ -243,3 +226,4 @@ const List = () => {
 };
 
 export default List;
+
