@@ -305,8 +305,8 @@
 
 .dateCloseBtn {
   position: absolute;
-  top: 0.4rem;
-  right: 0.1rem;
+  top: 16px;      /* Move further down */
+  right: 16px;    /* Move further right */
   width: 28px;
   height: 28px;
   border-radius: 50%;
