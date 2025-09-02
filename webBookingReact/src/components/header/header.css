@@ -186,30 +186,8 @@
   border-radius: 8px !important;
 }
 
-/* Add close button for header date picker */
-.headerDateCloseBtn {
-  position: absolute;
-  top: 5px;
-  right: 5px;   /* Move to right side */
-  left: 0;   /* Ensure left is not set */
-  background: #e74c3c;
-  color: white;
-  border: none;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 16px;
-  z-index: 100000 !important;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
 
-.headerDateCloseBtn:hover {
-  background-color: #c0392b;
-}
+
 
 /* Ensure proper positioning context */
 .headerSearchItem {
@@ -238,26 +216,24 @@
 
 /* Fix close button positioning */
 .date-close-btn {
-  position: absolute !important;
-  top: 10px !important;
-  right: 10px !important;
-  background-color: #e74c3c !important;
-  color: white !important;
-  border: none !important;
-  width: 28px !important;
-  height: 28px !important;
-  border-radius: 50% !important;
-  font-size: 18px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  cursor: pointer !important;
-  z-index: 999999 !important;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+  position: absolute ;
+  top: 10px ;
+  right: 10px ;
+  background-color: #e74c3c ;
+  color: white ;
+  border: none ;
+  width: 28px ;
+  height: 28px ;
+  border-radius: 50% ;
+  display: flex ;
+  align-items: center ;
+  justify-content: center ;
+  cursor: pointer ;
+  z-index: 999999 ;
 }
 
 .date-close-btn:hover {
-  background-color: #c0392b !important;
+  background-color: #c0392b;
 }
 
 /* Fix date picker container */
@@ -357,4 +333,24 @@
 /* Add space between pickers */
 .headerSearchItem + .headerSearchItem {
   margin-left: 16px;
+}
+
+.date-close-btn,
+.headerDateCloseBtn {
+  position: absolute;
+  top: 12px;
+  right: 16px;   /* Move to right side */
+  left: auto;    /* Ensure left is not set */
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
 }
