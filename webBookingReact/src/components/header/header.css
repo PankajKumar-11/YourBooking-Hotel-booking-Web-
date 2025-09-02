@@ -191,7 +191,7 @@
   position: absolute;
   top: 5px;
   right: 5px;   /* Move to right side */
-  left: auto;   /* Ensure left is not set */
+  left: 0;   /* Ensure left is not set */
   background: #e74c3c;
   color: white;
   border: none;
