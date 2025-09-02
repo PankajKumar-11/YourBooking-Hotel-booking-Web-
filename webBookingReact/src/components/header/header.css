@@ -190,8 +190,8 @@
 .headerDateCloseBtn {
   position: absolute;
   top: 5px;
-  left: 5px;    /* Move to left side */
-  right: auto;  /* Ensure right is not set */
+  right: 5px;   /* Move to right side */
+  left: auto;   /* Ensure left is not set */
   background: #e74c3c;
   color: white;
   border: none;

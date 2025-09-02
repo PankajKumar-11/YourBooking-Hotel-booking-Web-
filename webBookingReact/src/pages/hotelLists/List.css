@@ -332,10 +332,10 @@
 .datePickerDropdown {
   position: absolute;
   top: 60px; /* space below the input */
-  left: 0;
+  left: -340px;
   right: 0;
   margin: auto;
-  z-index: 100;
+  z-index: 10000;
   width: 95%;
   max-width: 400px;
   background: #fff;
