@@ -306,7 +306,7 @@
 .dateCloseBtn {
   position: absolute;
   top: 0.5rem;
-  right: 0.5rem;
+  left: 0.5rem;
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -331,14 +331,17 @@
 /* Ensure proper positioning container */
 .datePickerDropdown {
   position: absolute;
-  top: 0;
+  top: 60px; /* space below the input */
   left: 0;
-  width: 100%;
+  right: 0;
+  margin: auto;
   z-index: 100;
+  width: 95%;
+  max-width: 400px;
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.15);
-  padding: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  border-radius: 10px;
+  padding: 16px 0 0 0;
 }
 
 /* Make date picker controls clickable */
