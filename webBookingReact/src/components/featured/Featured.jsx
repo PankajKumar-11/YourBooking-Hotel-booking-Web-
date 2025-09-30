@@ -33,7 +33,7 @@ const Featured = () => {
         data.map((city, i) => (
           <div className="featuredItems" key={city.city}>
             <img
-              src={cityImages[city.city] || "/images/placeholder.jpg"}
+              src={cityImages[city.city] || "/src/assets/images/placeholder.jpg"}
               alt={city.city}
               className="featuredImg"
             />
