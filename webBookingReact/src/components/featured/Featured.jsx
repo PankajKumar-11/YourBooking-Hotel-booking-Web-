@@ -5,9 +5,16 @@ import useFetch from "../../hooks/useFetch";
 const Featured = () => {
   // Update the URL to fetch Indian cities data
   const { data, loading, error } = useFetch(
-    "/api/hotels/countByCity?cities=new delhi,bengaluru,mumbai,chennai,varanasi"
+    "/api/hotels/countByCity?cities=New Delhi,Bengaluru,Mumbai,Chennai,Varanasi"
   );
 
+  const cityImages = {
+    "New Delhi": "/src/assets/images/newdelhi.jpg",
+    "Bengaluru": "/src/assets/images/Bengaluru.jpg",
+    "Mumbai": "/src/assets/images/mumbai.jpg",
+    "Chennai": "/src/assets/images/chennai.jpg",
+    "Varanasi": "/src/assets/images/varanasi.jpg",
+  };
   // Add logging here, after the useFetch call
   console.log("Featured cities data:", data);
   console.log("Loading:", loading);
@@ -22,64 +29,20 @@ const Featured = () => {
           <p>Error loading city data</p>
           <button onClick={() => window.location.reload()}>Try Again</button>
         </div>
-      ) : data ? (
-        <>
-          <div className="featuredItems">
+      ) : data && data.length > 0 ? (
+        data.map((city, i) => (
+          <div className="featuredItems" key={city.city}>
             <img
-              src="/src/assets/images/newdelhi.jpg"
-              alt="New Delhi"
+              src={cityImages[city.city] || "/images/placeholder.jpg"}
+              alt={city.city}
               className="featuredImg"
             />
             <div className="featuredTitle">
-              <span className="FeaturedCity">New Delhi</span>
-              <span className="FeaturedHotels">{data[0]} Properties</span>
+              <span className="FeaturedCity">{city.city}</span>
+              <span className="FeaturedHotels">{city.count} Properties</span>
             </div>
           </div>
-          <div className="featuredItems">
-            <img
-              src="/src/assets/images/Bengaluru.jpg"
-              alt="Bengaluru"
-              className="featuredImg"
-            />
-            <div className="featuredTitle">
-              <span className="FeaturedCity">Bengaluru</span>
-              <span className="FeaturedHotels">{data[1]} Properties</span>
-            </div>
-          </div>
-          <div className="featuredItems">
-            <img
-              src="/src/assets/images/Mumbai.jpg"
-              alt="Mumbai"
-              className="featuredImg"
-            />
-            <div className="featuredTitle">
-              <span className="FeaturedCity">Mumbai</span>
-              <span className="FeaturedHotels">{data[2]} Properties</span>
-            </div>
-          </div>
-          <div className="featuredItems">
-            <img
-              src="/src/assets/images/Chennai.jpg"
-              alt="Chennai"
-              className="featuredImg"
-            />
-            <div className="featuredTitle">
-              <span className="FeaturedCity">Chennai</span>
-              <span className="FeaturedHotels">{data[3]} Properties</span>
-            </div>
-          </div>
-          <div className="featuredItems">
-            <img
-              src="/src/assets/images/Varanasi.jpg"
-              alt="Varanasi"
-              className="featuredImg"
-            />
-            <div className="featuredTitle">
-              <span className="FeaturedCity">Varanasi</span>
-              <span className="FeaturedHotels">{data[4]} Properties</span>
-            </div>
-          </div>
-        </>
+        ))
       ) : (
         <div className="featuredNoData">No city data available</div>
       )}
