@@ -9,11 +9,11 @@ const Featured = () => {
   );
 
   const cityImages = {
-    "New Delhi": "/src/assets/images/New Delhi.jpg",
-    "Bengaluru": "/src/assets/images/Bengaluru.jpg",
-    "Mumbai": "/src/assets/images/Mumbai.jpg",
-    "Chennai": "/src/assets/images/Chennai.jpg",
-    "Varanasi": "/src/assets/images/Varanasi.jpg",
+    "New Delhi": "/images/New Delhi.jpg",
+    "Bengaluru": "/images/Bengaluru.jpg",
+    "Mumbai": "/images/Mumbai.jpg",
+    "Chennai": "/images/Chennai.jpg",
+    "Varanasi": "/images/Varanasi.jpg",
   };
   // Add logging here, after the useFetch call
   console.log("Featured cities data:", data);
@@ -33,7 +33,7 @@ const Featured = () => {
         data.map((city, i) => (
           <div className="featuredItems" key={city.city}>
             <img
-              src={cityImages[city.city] || "/src/assets/images/placeholder.jpg"}
+              src={cityImages[city.city] || "/images/placeholder.jpg"}
               alt={city.city}
               className="featuredImg"
             />
