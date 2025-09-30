@@ -21,7 +21,7 @@ const Overview = () => {
         <div className="overviewItems">
             <img
               className="overviewImg"
-              src="/src/assets/images/New Delhi.jpg"
+              src="/images/New Delhi.jpg"
               alt=""
               />
             <div className="overviewTitle">
@@ -34,7 +34,7 @@ const Overview = () => {
 
         <div className="overviewItems">
             <img
-              src="/src/assets/images/Chennai.jpg"
+              src="/images/Chennai.jpg"
               alt=""
               className="overviewImg"
               />
@@ -45,7 +45,7 @@ const Overview = () => {
         </div>
         <div className="overviewItems">
           <img
-            src="/src/assets/images/Jaipur.jpg"
+            src="/images/Jaipur.jpg"
             alt=""
             className="overviewImg"
             />
@@ -56,7 +56,7 @@ const Overview = () => {
       </div>
       <div className="overviewItems">
           <img
-            src="/src/assets/images/Mumbai.jpg"
+            src="/images/Mumbai.jpg"
             alt=""
             className="overviewImg"
             />
