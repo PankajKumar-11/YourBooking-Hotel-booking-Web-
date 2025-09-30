@@ -1,10 +1,10 @@
 .overview{
     width: 100%;
-    max-width: 1200px;
+    max-width: 1000px;
     display: flex;
    flex-direction: column;
     justify-content: center;
-    gap: 10px;
+    gap: 6px;
 }
 
 .row{
@@ -52,7 +52,7 @@
       object-fit: cover;
 }
 .overviewImg:hover{
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 .overviewImg.flag{
