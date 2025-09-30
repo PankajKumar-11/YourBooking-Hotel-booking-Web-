@@ -21,7 +21,7 @@ const Overview = () => {
         <div className="overviewItems">
             <img
               className="overviewImg"
-              src="/src/assets/images/newdelhi.jpg"
+              src="/src/assets/images/New Delhi.jpg"
               alt=""
               />
             <div className="overviewTitle">

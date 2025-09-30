@@ -9,11 +9,11 @@ const Featured = () => {
   );
 
   const cityImages = {
-    "New Delhi": "/src/assets/images/newdelhi.jpg",
+    "New Delhi": "/src/assets/images/New Delhi.jpg",
     "Bengaluru": "/src/assets/images/Bengaluru.jpg",
-    "Mumbai": "/src/assets/images/mumbai.jpg",
-    "Chennai": "/src/assets/images/chennai.jpg",
-    "Varanasi": "/src/assets/images/varanasi.jpg",
+    "Mumbai": "/src/assets/images/Mumbai.jpg",
+    "Chennai": "/src/assets/images/Chennai.jpg",
+    "Varanasi": "/src/assets/images/Varanasi.jpg",
   };
   // Add logging here, after the useFetch call
   console.log("Featured cities data:", data);
