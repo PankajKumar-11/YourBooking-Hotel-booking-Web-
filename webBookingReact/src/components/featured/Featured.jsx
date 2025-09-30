@@ -1,45 +1,42 @@
 import React from "react";
 import "./Featured.css";
 import useFetch from "../../hooks/useFetch";
+import { Link } from "react-router-dom";
+
+const cityImages = {
+  "New Delhi": "/images/New Delhi.jpg",
+  "Bengaluru": "/images/Bengaluru.jpg",
+  "Mumbai": "/images/Mumbai.jpg",
+  "Chennai": "/images/Chennai.jpg",
+  "Varanasi": "/images/Varanasi.jpg",
+};
 
 const Featured = () => {
-  // Update the URL to fetch Indian cities data
   const { data, loading, error } = useFetch(
     "/api/hotels/countByCity?cities=New Delhi,Bengaluru,Mumbai,Chennai,Varanasi"
   );
 
-  const cityImages = {
-    "New Delhi": "/images/New Delhi.jpg",
-    "Bengaluru": "/images/Bengaluru.jpg",
-    "Mumbai": "/images/Mumbai.jpg",
-    "Chennai": "/images/Chennai.jpg",
-    "Varanasi": "/images/Varanasi.jpg",
-  };
-  // Add logging here, after the useFetch call
-  console.log("Featured cities data:", data);
-  console.log("Loading:", loading);
-  console.log("Error:", error);
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading city data</div>;
 
   return (
     <div className="featured">
-      {loading ? (
-        <div className="featuredLoading">Loading featured cities...</div>
-      ) : error ? (
-        <div className="featuredError">
-          <p>Error loading city data</p>
-          <button onClick={() => window.location.reload()}>Try Again</button>
-        </div>
-      ) : data && data.length > 0 ? (
+      {data && data.length > 0 ? (
         data.map((city, i) => (
-          <div className="featuredItems" key={city.city}>
-            <img
-              src={cityImages[city.city] || "/images/placeholder.jpg"}
-              alt={city.city}
-              className="featuredImg"
-            />
+          <div className="featuredItems" key={city.city || i}>
+            <Link
+              to={`/hotels?city=${encodeURIComponent(city.city)}`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <img
+                src={cityImages[city.city] || "/images/placeholder.jpg"}
+                alt={city.city}
+                className="featuredImg"
+              />
+            </Link>
             <div className="featuredTitle">
               <span className="FeaturedCity">{city.city}</span>
-              <span className="FeaturedHotels">{city.count} Properties</span>
+              <span className="FeaturedHotels">{city.count} Property</span>
             </div>
           </div>
         ))

@@ -1,6 +1,8 @@
 import React from "react";
 import "./Property.css";
 import useFetch from "../../hooks/useFetch";
+import { Link } from "react-router-dom";
+
 const Property = () => {
   const { data, loading, error } = useFetch("/api/hotels/countByType")
 
@@ -21,17 +23,19 @@ const Property = () => {
           images.map((img, i) =>
             data[i] ? (
               <div className="propertyItem" key={i}>
-                <img
-                  src={img}
-                  alt=""
-                  className="propertyImg"
-                />
-                <div className="propertyType">
-                  <h2>{data[i].type}</h2>
-                  <span>
-                    {data[i]?.count} {data[i]?.type}
-                  </span>
-                </div>
+                <Link to={`/hotels?type=${encodeURIComponent(data[i].type)}`}>
+                  <img
+                    src={img}
+                    alt=""
+                    className="propertyImg"
+                  />
+                  <div className="propertyType">
+                    <h2>{data[i].type}</h2>
+                    <span>
+                      {data[i]?.count} {data[i]?.type}
+                    </span>
+                  </div>
+                </Link>
               </div>
             ) : null
           )

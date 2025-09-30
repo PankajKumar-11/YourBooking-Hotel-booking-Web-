@@ -43,27 +43,21 @@ export const getHotel = async (req, res, next) => {
 };
 
 export const getHotels = async (req, res, next) => {
-  console.log("Query params:", req.query);
+  const { city, min, max, type } = req.query;
+  let filter = {};
+  if (city) filter.city = city;
+  if (type) filter.type = type;
+  if (min || max) filter.cheapestPrice = {};
+  if (min) filter.cheapestPrice.$gte = Number(min);
+  if (max) filter.cheapestPrice.$lte = Number(max);
+
   try {
-    const { min = 1, max = 50000, limit, featured, city } = req.query;
-
-    let filters = {
-      ...(featured && { featured }),
-      cheapestPrice: { $gte: Number(min), $lte: Number(max) }
-    };
-
-    if (city) {
-      filters.city = { $regex: city, $options: "i" };
-    }
-
-    const hotels = await Hotel.find(filters).limit(Number(limit));
+    const hotels = await Hotel.find(filter);
     res.status(200).json(hotels);
   } catch (err) {
     next(err);
   }
 };
-
-
 
 export const countByCity = async (req, res, next) => {
   const cities = req.query.cities.split(",");
@@ -84,39 +78,49 @@ export const countByCity = async (req, res, next) => {
   }
 };
 
-
 export const countByType = async (req, res, next) => {
   try {
-    const hotelCount = await Hotel.countDocuments({type:"hotel"})
-    const apartmentCount = await Hotel.countDocuments({type:"apartment"})
-    const resortCount = await Hotel.countDocuments({type:"resort"})
-    const villaCount = await Hotel.countDocuments({type:"villa"})
+    const hotelCount = await Hotel.countDocuments({ type: "hotel" });
+    const apartmentCount = await Hotel.countDocuments({ type: "apartment" });
+    const resortCount = await Hotel.countDocuments({ type: "resort" });
+    const villaCount = await Hotel.countDocuments({ type: "villa" });
     res.status(200).json([
-      {type:"hotel" , count:hotelCount},
-      {type:"apartment" , count:apartmentCount},
-      {type:"resort" , count:resortCount},
-      {type:"villa" , count:villaCount},
+      { type: "hotel", count: hotelCount },
+      { type: "apartment", count: apartmentCount },
+      { type: "resort", count: resortCount },
+      { type: "villa", count: villaCount },
     ]);
   } catch (err) {
     next(err);
   }
 };
 
-
-export const getHotelRooms = async (req,res,next)=>{
-  try{
+export const getHotelRooms = async (req, res, next) => {
+  try {
     const hotel = await Hotel.findById(req.params.id);
-    
+
     if (!hotel) {
-      return res.status(404).json({ success: false, message: "Hotel not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Hotel not found" });
     }
 
-    const list = await Promise.all(hotel.rooms.map(room=>{
-      return Room.findById(room);
-    }))
+    const list = await Promise.all(
+      hotel.rooms.map((room) => {
+        return Room.findById(room);
+      })
+    );
     res.status(200).json(list);
+  } catch (err) {
+    next(err);
   }
-  catch(err){
-   next(err)
+};
+
+export const getFeaturedHotels = async (req, res, next) => {
+  try {
+    const hotels = await Hotel.find({ featured: true }).limit(4);
+    res.status(200).json(hotels);
+  } catch (err) {
+    next(err);
   }
 };

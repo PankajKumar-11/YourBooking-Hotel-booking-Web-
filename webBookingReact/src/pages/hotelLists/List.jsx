@@ -10,7 +10,9 @@ import useFetch from "../../hooks/useFetch";
 
 const List = () => {
   const location = useLocation();
-  const [destination, setDestination] = useState(location.state?.Destination || "");
+  const params = new URLSearchParams(location.search);
+  const city = params.get("city");
+  const [destination, setDestination] = useState(city || location.state?.Destination || "");
   const [dates, setDates] = useState(location.state?.dates || [{
     startDate: new Date(),
     endDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
@@ -62,6 +64,9 @@ const List = () => {
   useEffect(() => {
     reFetch();
   }, [searchParams]);
+
+  // Fetch hotels for the selected city
+  const { data: cityData, loading: cityLoading, error: cityError } = useFetch(`/api/hotels?city=${city}`);
 
   return (
     <div>
