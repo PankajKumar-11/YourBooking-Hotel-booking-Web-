@@ -10,7 +10,7 @@ const Overview = () => {
         <div className="overviewItems">
             <img
           className="overviewImg"
-          src="/src/assets/images/Bengaluru.jpg"
+          src="/images/Bengaluru.jpg"
           alt=""
           />
             <div className="overviewTitle">
