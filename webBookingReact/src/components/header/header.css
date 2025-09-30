@@ -84,7 +84,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    position: relative; /* Add for better positioning context */
+    position: relative;
+    z-index: 9000;
 }
 
 .headerSearchInput{
@@ -97,26 +98,80 @@
     color:lightgray
 }
 
-.date{
-    position: absolute;
-    top: 50px;
-    left: 0;
-    z-index: 9999;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    padding: 10px;
+/* Date picker dropdown in header */
+.datePickerDropdown {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  z-index: 999;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.options{
-     z-index: 2;
-    position: absolute;
-    top: 220px; /* Increase this value so it appears below the date picker */
-    left: 0;
-    background-color: white;
-    color: gray;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.466)  ;
+/* Date picker container */
+.date-container {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  z-index: 20;
+}
+
+/* Date picker styling */
+.date {
+  position: absolute;
+  top: 28px;
+  left: -30px;
+  z-index: 9999;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  padding: 0 0 16px 0;
+}
+
+/* Close button in top right of date picker */
+.date-close-btn,
+.headerDateCloseBtn {
+  position: absolute;
+  top: 0px;
+  right: -310px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.date-close-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Enable clicking on calendar days */
+.rdrDay, .rdrDayNumber, .rdrDayStartPreview, .rdrDayEndPreview {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 100000 !important;
+}
+
+/* Options dropdown */
+.options {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  z-index: 10;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  padding: 24px 32px 24px 24px;
+  min-width: 260px;
+  color: gray;
 }
 
 .optionItem{
@@ -147,210 +202,7 @@
     gap: 10px;
 }
 
-/* For the date picker in List.jsx */
-.datePickerDropdown {
-  position: absolute;
-  top: 50px;
-  left: 0; /* Align to left */
-  z-index: 999;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Add a close button for better UX */
-.date-close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #f0f0f0;
-  border: none;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 16px;
-  z-index: 1000;
-}
-
-/* Add styles for date picker in header */
-.headerSearchItem .date {
-  position: absolute !important;
-  top: 50px !important;
-  z-index: 99999 !important; /* Match List.css */
-  background-color: white !important;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15) !important;
-  border-radius: 8px !important;
-}
-
-
-
-
-/* Ensure proper positioning context */
-.headerSearchItem {
-  position: relative !important;
-}
-
-/* Fix date picker styling */
-
-/* Ensure proper positioning */
-.dateWrapper {
-  position: relative;
-}
-
-/* Enable clicking on calendar days */
-.rdrDay, .rdrDayNumber, .rdrDayStartPreview, .rdrDayEndPreview {
-  pointer-events: auto !important;
-  cursor: pointer !important;
-  z-index: 100000 !important;
-}
-
-/* Make sure the header search item has proper positioning context */
-.headerSearchItem {
-  position: relative !important;
-  z-index: 9000 !important;
-}
-
-/* Fix close button positioning */
-.date-close-btn {
-  position: absolute ;
-  top: 10px ;
-  right: 10px ;
-  background-color: #e74c3c ;
-  color: white ;
-  border: none ;
-  width: 28px ;
-  height: 28px ;
-  border-radius: 50% ;
-  display: flex ;
-  align-items: center ;
-  justify-content: center ;
-  cursor: pointer ;
-  z-index: 999999 ;
-}
-
-.date-close-btn:hover {
-  background-color: #c0392b;
-}
-
-/* Fix date picker container */
-.date-container {
-  position: relative;
-}
-
-/* Fix date picker positioning and styling */
-.date {
-  position: absolute;
-  top: 50px;
-  left: 0;
-  z-index: 9999;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  padding: 10px;
-}
-
-/* Fix close button */
-.date-close-btn {
-  position: absolute;
-  top: 10px;
-  left: 10px;   /* <-- Move to left */
-  right: auto;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10000;
-}
-
-/* Make each search item a positioning context */
-.headerSearchItem {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Date picker dropdown */
-.date-container {
-  position: absolute;
-  top: 48px;
-  left: 0;
-  z-index: 20;
-}
-
-/* Date picker styling */
-.date {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.15);
-  padding: 16px 16px 32px 16px;
-  position: relative;
-}
-
-/* Close button in top right of date picker */
-.date-close-btn {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 100;
-}
-
-/* Options dropdown */
-.options {
-  position: absolute;
-  top: 48px;
-  left: 0;
-  z-index: 10;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.15);
-  padding: 24px 32px 24px 24px;
-  min-width: 260px;
-}
-
 /* Add space between pickers */
 .headerSearchItem + .headerSearchItem {
   margin-left: 16px;
-}
-
-.date-close-btn,
-.headerDateCloseBtn {
-  position: absolute;
-  top: 12px;
-  right: 16px;   /* Move to right side */
-  left: auto;    /* Ensure left is not set */
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 100;
 }

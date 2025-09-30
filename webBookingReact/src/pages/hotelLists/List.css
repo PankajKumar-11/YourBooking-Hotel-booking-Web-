@@ -98,22 +98,6 @@
   background-color: #e9f0f7;
 }
 
-/* REMOVE these classes as they're redundant with the modal approach */
-.datePickerWrapper {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-  padding: 15px;
-  max-width: 90%;
-  width: auto;
-}
-
-
 .dateSelect:hover {
   background-color: #c0392b;
   transform: scale(1.1);
@@ -276,7 +260,6 @@
   background-color: #005fa3;
 }
 
-
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
   .listWrapper {
@@ -290,8 +273,6 @@
   }
 }
 
-
-
 /* Add media query for mobile responsiveness */
 @media (max-width: 768px) {
   .datePickerDropdown {
@@ -303,10 +284,28 @@
   }
 }
 
+.datePickerDropdown {
+  position: absolute;
+  top: 10px;
+  left: 55%;
+  transform: translateX(-55%);
+  z-index: 30000;
+  width: 320px; /* slightly wider for 7 columns */
+  background: #fff;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  border-radius: 10px;
+  padding: 44px 0 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: visible;
+}
+
+/* Close button styling: always on top right INSIDE picker */
 .dateCloseBtn {
   position: absolute;
-  top: 16px;      /* Move further down */
-  right: 16px;    /* Move further right */
+  top: 8px;
+  right: 8px;
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -318,31 +317,25 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 101;
+  z-index: 30100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-/* Ensure the parent has position relative */
-.lsItem {
-  position: relative;
+/* Force calendar grid to 7 columns and prevent shrinking */
+.datePickerDropdown .rdrMonth,
+.datePickerDropdown .rdrCalendarWrapper {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  box-sizing: border-box;
+  overflow-x: visible;
 }
 
-/* Fix date picker in the list page */
-
-/* Ensure proper positioning container */
-.datePickerDropdown {
-  position: absolute;
-  top: 60px; /* space below the input */
-  left: -220px;
-  right: 0;
-  margin: auto;
-  z-index: 10000;
-  width: 95%;
-  max-width: 400px;
-  background: #fff;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
-  border-radius: 10px;
-  padding: 16px 0 0 0;
-}
+/* .datePickerDropdown .rdrDays {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  width: 100%;
+} */
 
 /* Make date picker controls clickable */
 .rdrCalendarWrapper, 
