@@ -70,7 +70,7 @@ const NewHotel = () => {
                 data
               );
               console.log("Image uploaded:", uploadRes.data.url);
-              return uploadRes.data.url;
+              return uploadRes.data.secure_url || uploadRes.data.url;
             })
           );
         } catch (uploadErr) {
