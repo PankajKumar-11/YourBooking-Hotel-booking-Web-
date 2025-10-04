@@ -36,11 +36,18 @@ const HotelInfo = () => {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API_URL || "";
 
-  // Helper to get valid dates array
+  // Helper to get a valid dates array
   function getValidDates(datesArr) {
-    return Array.isArray(datesArr) && datesArr.length > 0
-      ? datesArr
-      : [{ startDate: new Date(), endDate: new Date(Date.now() + 86400000) }];
+    if (
+      Array.isArray(datesArr) &&
+      datesArr.length > 0 &&
+      datesArr[0].startDate &&
+      datesArr[0].endDate
+    ) {
+      return datesArr;
+    }
+    // fallback: today and tomorrow
+    return [{ startDate: new Date(), endDate: new Date(Date.now() + 86400000) }];
   }
 
   const safeDates = Array.isArray(dates) && dates.length > 0 ? dates : [{ startDate: new Date(), endDate: new Date(Date.now() + 86400000) }];
