@@ -44,11 +44,17 @@ const HotelInfo = () => {
     const diffDays = Math.ceil(timeDiff/MILLISECONDS_PER_DAY);
     return diffDays;
   }
-  const rooms = options?.room || 1;
+  // Ensure rooms is always a number >= 1
+  const rooms = Number(options?.room) > 0 ? Number(options.room) : 1;
 
+  // Ensure data.cheapestPrice is a valid number
+  const pricePerNight = Number(data.cheapestPrice) > 0 ? Number(data.cheapestPrice) : 0;
+
+  // Calculate days safely
   const days =
-  passedNights ||
-  (passedDates?.[0]?.startDate && passedDates?.[0]?.endDate
+  passedNights && !isNaN(passedNights)
+    ? passedNights
+    : passedDates?.[0]?.startDate && passedDates?.[0]?.endDate
     ? dayDifference(
         new Date(passedDates[0].endDate),
         new Date(passedDates[0].startDate)
@@ -58,7 +64,10 @@ const HotelInfo = () => {
         new Date(dates[0].endDate),
         new Date(dates[0].startDate)
       )
-    : 1); // fallback to 1 night if dates are missing
+    : 1; // fallback to 1 night if dates are missing
+
+  // Final price calculation
+  const totalPrice = days * pricePerNight * rooms;
 
   const handleOpen = (index) => {
     setSlideNumber(index);
@@ -175,7 +184,7 @@ const HotelInfo = () => {
                       <span>Landmark view</span>
                       <span>Free private parking available at the hotel</span>
                       <span className="hotelPrice">
-                        ₹{days * data.cheapestPrice * rooms} <small>({days} nights)</small>
+                        ₹{totalPrice} <small>({days} night{days > 1 ? "s" : ""})</small>
                       </span>
                      
                     </div>

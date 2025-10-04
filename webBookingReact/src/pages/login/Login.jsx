@@ -89,7 +89,7 @@ const Login = () => {
 
       // Make sure we send proper headers
       const response = await axios.post(
-        `${BASE_URL}/auth/register`,
+        "http://localhost:8800/auth/register",
         credentials,
         {
           headers: {
