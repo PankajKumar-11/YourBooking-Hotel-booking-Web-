@@ -70,12 +70,12 @@ const HotelInfo = () => {
   const days =
   passedNights && !isNaN(passedNights)
     ? passedNights
-    : validPassedDates[0]?.startDate && validPassedDates[0]?.endDate
+    : validPassedDates[0].startDate && validPassedDates[0].endDate
     ? dayDifference(
         new Date(validPassedDates[0].endDate),
         new Date(validPassedDates[0].startDate)
       )
-    : validContextDates[0]?.startDate && validContextDates[0]?.endDate
+    : validContextDates[0].startDate && validContextDates[0].endDate
     ? dayDifference(
         new Date(validContextDates[0].endDate),
         new Date(validContextDates[0].startDate)
@@ -205,7 +205,7 @@ const HotelInfo = () => {
                      
                     </div>
                   </div>
-                  <button onClick={handleClick} className="reserveButton">Reserve</button>
+                  <button onClick={() => setOpenModal(true)} className="reserveButton">Reserve</button>
                 </div>
               </div>
             </div>
@@ -214,7 +214,7 @@ const HotelInfo = () => {
           </div>
         </>
       )}
-      {openModal && <Reserve setOpen={setOpenModal} hotelId={id}/>}
+      {openModal && <Reserve onClose={() => setOpenModal(false)} />}
     </div>
   );
 };
