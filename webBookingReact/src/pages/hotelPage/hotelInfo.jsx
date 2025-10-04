@@ -64,19 +64,19 @@ const HotelInfo = () => {
 
   // Calculate days safely
   const days =
-    passedNights && !isNaN(passedNights)
-      ? passedNights
-      : validPassedDates[0].startDate && validPassedDates[0].endDate
-      ? dayDifference(
-          new Date(validPassedDates[0].endDate),
-          new Date(validPassedDates[0].startDate)
-        )
-      : validContextDates[0].startDate && validContextDates[0].endDate
-      ? dayDifference(
-          new Date(validContextDates[0].endDate),
-          new Date(validContextDates[0].startDate)
-        )
-      : 1; // fallback to 1 night if dates are missing
+  passedNights && !isNaN(passedNights)
+    ? passedNights
+    : validPassedDates[0].startDate && validPassedDates[0].endDate
+    ? dayDifference(
+        new Date(validPassedDates[0].endDate),
+        new Date(validPassedDates[0].startDate)
+      )
+    : validContextDates[0].startDate && validContextDates[0].endDate
+    ? dayDifference(
+        new Date(validContextDates[0].endDate),
+        new Date(validContextDates[0].startDate)
+      )
+    : 1; // fallback to 1 night if dates are missing
 
   // Final price calculation
   const totalPrice = days * pricePerNight * rooms;
