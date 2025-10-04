@@ -47,18 +47,18 @@ const HotelInfo = () => {
   const rooms = options?.room || 1;
 
   const days =
-    passedNights ||
-    (passedDates?.[0]?.startDate && passedDates?.[0]?.endDate
-      ? dayDifference(
-          new Date(passedDates[0].endDate),
-          new Date(passedDates[0].startDate)
-        )
-      : dates?.[0]?.startDate && dates?.[0]?.endDate
-      ? dayDifference(
-          new Date(dates[0].endDate),
-          new Date(dates[0].startDate)
-        )
-      : 1);
+  passedNights ||
+  (passedDates?.[0]?.startDate && passedDates?.[0]?.endDate
+    ? dayDifference(
+        new Date(passedDates[0].endDate),
+        new Date(passedDates[0].startDate)
+      )
+    : dates?.[0]?.startDate && dates?.[0]?.endDate
+    ? dayDifference(
+        new Date(dates[0].endDate),
+        new Date(dates[0].startDate)
+      )
+    : 1); // fallback to 1 night if dates are missing
 
   const handleOpen = (index) => {
     setSlideNumber(index);
@@ -123,7 +123,9 @@ const HotelInfo = () => {
               </div>
             )}
             <div className="hotelWrapper">
-              <button className="bookNow">Reserve or Book now</button>
+              <button className="bookNow" onClick={handleClick}>
+                Reserve or Book now
+              </button>
               <h1 className="hotelTitle">{data?.name || "Hotel Name"}</h1>
               <div className="hotelAddress">
                 <FontAwesomeIcon
