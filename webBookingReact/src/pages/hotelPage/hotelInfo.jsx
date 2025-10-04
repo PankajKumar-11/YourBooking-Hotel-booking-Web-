@@ -36,6 +36,13 @@ const HotelInfo = () => {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API_URL || "";
 
+  // Helper to get valid dates array
+  function getValidDates(datesArr) {
+    return Array.isArray(datesArr) && datesArr.length > 0
+      ? datesArr
+      : [{ startDate: new Date(), endDate: new Date(Date.now() + 86400000) }];
+  }
+
   const safeDates = Array.isArray(dates) && dates.length > 0 ? dates : [{ startDate: new Date(), endDate: new Date(Date.now() + 86400000) }];
   const safeOptions = options || { room: 1 };
 
@@ -51,21 +58,25 @@ const HotelInfo = () => {
   // Ensure data.cheapestPrice is a valid number
   const pricePerNight = Number(data.cheapestPrice) > 0 ? Number(data.cheapestPrice) : 0;
 
+  // Use valid dates for passedDates and context dates
+  const validPassedDates = getValidDates(passedDates);
+  const validContextDates = getValidDates(dates);
+
   // Calculate days safely
   const days =
-  passedNights && !isNaN(passedNights)
-    ? passedNights
-    : passedDates?.[0]?.startDate && passedDates?.[0]?.endDate
-    ? dayDifference(
-        new Date(passedDates[0].endDate),
-        new Date(passedDates[0].startDate)
-      )
-    : safeDates[0].startDate && safeDates[0].endDate
-    ? dayDifference(
-        new Date(safeDates[0].endDate),
-        new Date(safeDates[0].startDate)
-      )
-    : 1; // fallback to 1 night if dates are missing
+    passedNights && !isNaN(passedNights)
+      ? passedNights
+      : validPassedDates[0].startDate && validPassedDates[0].endDate
+      ? dayDifference(
+          new Date(validPassedDates[0].endDate),
+          new Date(validPassedDates[0].startDate)
+        )
+      : validContextDates[0].startDate && validContextDates[0].endDate
+      ? dayDifference(
+          new Date(validContextDates[0].endDate),
+          new Date(validContextDates[0].startDate)
+        )
+      : 1; // fallback to 1 night if dates are missing
 
   // Final price calculation
   const totalPrice = days * pricePerNight * rooms;
