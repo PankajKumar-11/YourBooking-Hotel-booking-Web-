@@ -1,4 +1,3 @@
-
 .homeBrowseProperty{
     margin-top: 50px;
 }
@@ -32,4 +31,11 @@
 
 .propertyType>h2{
     text-transform: capitalize;
+}
+.propertyList a {
+  text-decoration: none;
+  color: inherit;
+}
+.propertyList a:visited {
+  color: inherit;
 }

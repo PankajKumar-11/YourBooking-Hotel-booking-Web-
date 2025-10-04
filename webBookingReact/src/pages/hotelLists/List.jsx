@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./List.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { format, differenceInDays } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
@@ -12,6 +12,7 @@ const List = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const city = params.get("city");
+  const type = params.get("type"); // Add this after city
   const [destination, setDestination] = useState(city || location.state?.Destination || "");
   const [dates, setDates] = useState(location.state?.dates || [{
     startDate: new Date(),
@@ -44,6 +45,7 @@ const List = () => {
     city: destination,
     min: min,
     max: max,
+    type: type || "",
   });
   
   // Handle search button click
@@ -52,12 +54,13 @@ const List = () => {
       city: destination,
       min: min,
       max: max,
+      type: type || "",
     });
     setOpenDate(false);
   };
   
   const { data, loading, error, reFetch } = useFetch(
-    `/hotels?city=${searchParams.city}&min=${searchParams.min}&max=${searchParams.max}`
+    `/hotels?city=${searchParams.city}&min=${searchParams.min}&max=${searchParams.max}${searchParams.type ? `&type=${searchParams.type}` : ""}`
   );
   
   // Re-fetch when search parameters change
@@ -214,7 +217,18 @@ const List = () => {
                   key={item._id} 
                   nights={nightCount} 
                   options={options}
-                />
+                >
+                  <Link
+                    to={`/hotels/${item._id}`}
+                    state={{
+                      dates: dates, // your selected dates array
+                      nights: nightCount // number of nights, calculate from dates
+                    }}
+                    className="seeAvailabilityLink"
+                  >
+                    See availability
+                  </Link>
+                </SearchItem>
               ))
             ) : (
               <div className="noResultsContainer">

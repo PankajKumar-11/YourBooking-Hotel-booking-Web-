@@ -22,6 +22,7 @@ import { toast } from "react-toastify";
 
 const HotelInfo = () => {
   const location = useLocation();
+  const { dates: passedDates, nights: passedNights } = location.state || {};
   const id = location.pathname.split("/")[2];
   console.log(id)
 
@@ -43,8 +44,21 @@ const HotelInfo = () => {
     const diffDays = Math.ceil(timeDiff/MILLISECONDS_PER_DAY);
     return diffDays;
   }
-  const days = dayDifference(dates[0]?.endDate || null , dates[0]?.startDate || null);
+  const rooms = options?.room || 1;
 
+  const days =
+    passedNights ||
+    (passedDates?.[0]?.startDate && passedDates?.[0]?.endDate
+      ? dayDifference(
+          new Date(passedDates[0].endDate),
+          new Date(passedDates[0].startDate)
+        )
+      : dates?.[0]?.startDate && dates?.[0]?.endDate
+      ? dayDifference(
+          new Date(dates[0].endDate),
+          new Date(dates[0].startDate)
+        )
+      : 1);
 
   const handleOpen = (index) => {
     setSlideNumber(index);
@@ -159,7 +173,7 @@ const HotelInfo = () => {
                       <span>Landmark view</span>
                       <span>Free private parking available at the hotel</span>
                       <span className="hotelPrice">
-                        ₹{days*data.cheapestPrice* options.room} <small>({days} nights)</small>
+                        ₹{days * data.cheapestPrice * rooms} <small>({days} nights)</small>
                       </span>
                      
                     </div>
