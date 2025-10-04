@@ -60,6 +60,7 @@ const HotelInfo = () => {
     return diffDays;
   }
   // Ensure rooms is always a number >= 1
+  const safeOptions = options || { room: 1 };
   const rooms = Number(safeOptions.room) > 0 ? Number(safeOptions.room) : 1;
 
   // Ensure data.cheapestPrice is a valid number
