@@ -41,8 +41,8 @@ const HotelInfo = () => {
     if (
       Array.isArray(datesArr) &&
       datesArr.length > 0 &&
-      datesArr[0].startDate &&
-      datesArr[0].endDate
+      datesArr[0]?.startDate &&
+      datesArr[0]?.endDate
     ) {
       return datesArr;
     }
@@ -50,8 +50,8 @@ const HotelInfo = () => {
     return [{ startDate: new Date(), endDate: new Date(Date.now() + 86400000) }];
   }
 
-  const safeDates = Array.isArray(dates) && dates.length > 0 ? dates : [{ startDate: new Date(), endDate: new Date(Date.now() + 86400000) }];
-  const safeOptions = options || { room: 1 };
+  const validPassedDates = getValidDates(passedDates);
+  const validContextDates = getValidDates(dates);
 
   const MILLISECONDS_PER_DAY = 1000*60*60*24;
   function dayDifference(date1,date2){
@@ -65,20 +65,16 @@ const HotelInfo = () => {
   // Ensure data.cheapestPrice is a valid number
   const pricePerNight = Number(data.cheapestPrice) > 0 ? Number(data.cheapestPrice) : 0;
 
-  // Use valid dates for passedDates and context dates
-  const validPassedDates = getValidDates(passedDates);
-  const validContextDates = getValidDates(dates);
-
   // Calculate days safely
   const days =
   passedNights && !isNaN(passedNights)
     ? passedNights
-    : validPassedDates[0].startDate && validPassedDates[0].endDate
+    : validPassedDates[0]?.startDate && validPassedDates[0]?.endDate
     ? dayDifference(
         new Date(validPassedDates[0].endDate),
         new Date(validPassedDates[0].startDate)
       )
-    : validContextDates[0].startDate && validContextDates[0].endDate
+    : validContextDates[0]?.startDate && validContextDates[0]?.endDate
     ? dayDifference(
         new Date(validContextDates[0].endDate),
         new Date(validContextDates[0].startDate)
