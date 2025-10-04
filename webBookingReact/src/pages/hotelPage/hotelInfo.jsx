@@ -36,7 +36,8 @@ const HotelInfo = () => {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API_URL || "";
 
-
+  const safeDates = Array.isArray(dates) && dates.length > 0 ? dates : [{ startDate: new Date(), endDate: new Date(Date.now() + 86400000) }];
+  const safeOptions = options || { room: 1 };
 
   const MILLISECONDS_PER_DAY = 1000*60*60*24;
   function dayDifference(date1,date2){
@@ -45,7 +46,7 @@ const HotelInfo = () => {
     return diffDays;
   }
   // Ensure rooms is always a number >= 1
-  const rooms = Number(options?.room) > 0 ? Number(options.room) : 1;
+  const rooms = Number(safeOptions.room) > 0 ? Number(safeOptions.room) : 1;
 
   // Ensure data.cheapestPrice is a valid number
   const pricePerNight = Number(data.cheapestPrice) > 0 ? Number(data.cheapestPrice) : 0;
@@ -59,10 +60,10 @@ const HotelInfo = () => {
         new Date(passedDates[0].endDate),
         new Date(passedDates[0].startDate)
       )
-    : dates?.[0]?.startDate && dates?.[0]?.endDate
+    : safeDates[0].startDate && safeDates[0].endDate
     ? dayDifference(
-        new Date(dates[0].endDate),
-        new Date(dates[0].startDate)
+        new Date(safeDates[0].endDate),
+        new Date(safeDates[0].startDate)
       )
     : 1; // fallback to 1 night if dates are missing
 
