@@ -16,7 +16,7 @@ const app = express()
 
 const allowedOrigins = [
   "https://yourbookingadmin.netlify.app",
-  "https://yourbookingapp.netlify.app",
+  "https://yourbookingweb.netlify.app",
   "http://localhost:5173", // for local client dev
   "http://localhost:8800"  // for loca  l admin dev
 ];
