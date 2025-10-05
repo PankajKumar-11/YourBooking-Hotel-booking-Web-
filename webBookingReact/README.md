@@ -1,7 +1,7 @@
 # YourBooking – React + Vite
 
 Live deployments:
-- Frontend (Netlify): https://yourbookingapp.netlify.app/
+- Frontend (Netlify): https://yourbookingweb.netlify.app/
 - Backend API (Render): https://yourbooking-api.onrender.com
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
