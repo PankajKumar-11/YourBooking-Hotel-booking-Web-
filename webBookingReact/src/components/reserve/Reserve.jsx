@@ -9,11 +9,11 @@ import { AuthContext } from "../../context/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Reserve = ({ setOpen, hotelId }) => {
+const Reserve = ({ setOpen, hotelId, dates: propDates }) => {
   const { data, loading, error } = useFetch(`/hotels/room/${hotelId}`);
   const { user } = useContext(AuthContext);
   const [selectedRooms, setSelectedRooms] = useState([]);
-  const { dates } = useContext(SearchContext);
+  const { dates: ctxDates } = useContext(SearchContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,6 +23,19 @@ const Reserve = ({ setOpen, hotelId }) => {
       setOpen(false);
     }
   }, []);
+
+  // Prefer passed-in prop dates, then context dates, then fallback to today->tomorrow
+  const effectiveDates =
+    propDates && Array.isArray(propDates) && propDates.length > 0 && propDates[0]?.startDate
+      ? propDates
+      : ctxDates && Array.isArray(ctxDates) && ctxDates.length > 0 && ctxDates[0]?.startDate
+      ? ctxDates
+      : [
+          {
+            startDate: new Date(),
+            endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+          },
+        ];
 
   const getDatesInRange = (startDate, endDate) => {
     const start = new Date(startDate);
@@ -36,23 +49,13 @@ const Reserve = ({ setOpen, hotelId }) => {
     return dates;
   };
 
-  // Use SearchContext dates if available, otherwise fallback to [today, tomorrow]
-  const effectiveDates =
-    dates && Array.isArray(dates) && dates.length > 0 && dates[0]?.startDate
-      ? dates
-      : [
-          {
-            startDate: new Date(),
-            endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
-          },
-        ];
-
   const allDates = getDatesInRange(
     effectiveDates[0].startDate,
     effectiveDates[0].endDate
   );
+
   const isAvailable = (roomNumber) => {
-    const unavailable = Array.isArray(roomNumber.unavailableDates)
+    const unavailable = Array.isArray(roomNumber?.unavailableDates)
       ? roomNumber.unavailableDates
       : [];
     const isFound = unavailable.some((date) =>

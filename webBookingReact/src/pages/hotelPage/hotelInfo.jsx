@@ -22,7 +22,21 @@ import { toast } from "react-toastify";
 
 const HotelInfo = () => {
   const location = useLocation();
-  const { dates: passedDates, nights: passedNights } = location.state || {};
+  const { dates: ctxDates } = useContext(SearchContext);
+
+  // Use dates passed via location.state first, then SearchContext, otherwise fallback (today -> tomorrow)
+  const effectiveDates =
+    location?.state?.dates && Array.isArray(location.state.dates) && location.state.dates.length > 0
+      ? location.state.dates
+      : ctxDates && Array.isArray(ctxDates) && ctxDates.length > 0
+      ? ctxDates
+      : [
+          {
+            startDate: new Date(),
+            endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+          },
+        ];
+
   const id = location.pathname.split("/")[2];
   console.log(id)
 
@@ -187,7 +201,13 @@ const HotelInfo = () => {
           </div>
         </>
       )}
-      {openModal && <Reserve setOpen={setOpenModal} hotelId={id}/>}
+      {openModal && (
+        <Reserve
+          setOpen={setOpenModal}
+          hotelId={id}
+          dates={effectiveDates} // <-- pass dates explicitly
+        />
+      )}
     </div>
   );
 };
