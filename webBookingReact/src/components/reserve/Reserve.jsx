@@ -67,9 +67,10 @@ const Reserve = ({ setOpen, hotelId, dates: propDates }) => {
     const unavailable = Array.isArray(roomNumber?.unavailableDates)
       ? roomNumber.unavailableDates
       : [];
-    const isFound = unavailable.some((date) =>
-      allDates.includes(new Date(date).getTime())
+    const unavailableMs = unavailable.map((d) =>
+      typeof d === "number" ? d : new Date(d).getTime()
     );
+    const isFound = unavailableMs.some((ms) => allDates.includes(ms));
     return !isFound;
   };
 
@@ -87,38 +88,20 @@ const Reserve = ({ setOpen, hotelId, dates: propDates }) => {
       return;
     }
     try {
-      // send availability update for each selected room
+      // send ISO dates (safer) and wait for server persistence
+      const payloadDates = allDates.map((d) =>
+        typeof d === "number" ? new Date(d).toISOString() : new Date(d).toISOString()
+      );
+
       await Promise.all(
         selectedRooms.map((roomId) =>
-          axios.put(
-            `${BASE_URL}/rooms/availability/${roomId}`,
-            { dates: allDates }
-          )
+          axios.put(`${BASE_URL}/rooms/availability/${roomId}`, { dates: payloadDates })
         )
       );
-      // update local copy so UI shows rooms as booked immediately
-      setLocalData((prev) => {
-        return prev.map((item) => {
-          return {
-            ...item,
-            roomNumbers: item.roomNumbers.map((rn) => {
-              if (selectedRooms.includes(rn._id)) {
-                const existing = Array.isArray(rn.unavailableDates)
-                  ? rn.unavailableDates.map((d) =>
-                      typeof d === "number" ? d : new Date(d).getTime()
-                    )
-                  : [];
-                const toAdd = allDates.map((d) =>
-                  typeof d === "number" ? d : new Date(d).getTime()
-                );
-                const merged = Array.from(new Set([...existing, ...toAdd]));
-                return { ...rn, unavailableDates: merged };
-              }
-              return rn;
-            }),
-          };
-        });
-      });
+
+      // re-fetch latest rooms from server so UI reflects persisted unavailableDates
+      const fresh = await axios.get(`${BASE_URL}/hotels/room/${hotelId}`);
+      setLocalData(Array.isArray(fresh.data) ? fresh.data : []);
       toast.success("Rooms reserved successfully");
       setSelectedRooms([]);
       setOpen(false);
