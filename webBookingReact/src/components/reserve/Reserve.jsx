@@ -5,9 +5,9 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import useFetch from "../../hooks/useFetch";
 import { SearchContext } from "../../context/SearchContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 const Reserve = ({ setOpen, hotelId, dates: propDates }) => {
   const { data, loading, error } = useFetch(`/hotels/room/${hotelId}`);
@@ -15,6 +15,7 @@ const Reserve = ({ setOpen, hotelId, dates: propDates }) => {
   const [selectedRooms, setSelectedRooms] = useState([]);
   const { dates: ctxDates } = useContext(SearchContext);
   const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_API_URL || "";
 
   useEffect(() => {
     if (!user) {
@@ -67,44 +68,31 @@ const Reserve = ({ setOpen, hotelId, dates: propDates }) => {
   const handleSelect = (e) => {
     const checked = e.target.checked;
     const value = e.target.value;
-    setSelectedRooms(
-      checked
-        ? [...selectedRooms, value]
-        : selectedRooms.filter((item) => item !== value)
+    setSelectedRooms((prev) =>
+      checked ? [...prev, value] : prev.filter((id) => id !== value)
     );
   };
-  const BASE_URL = import.meta.env.VITE_API_URL || "";
 
-  const handleClick = async () => {
+  const handleReserve = async () => {
     if (selectedRooms.length === 0) {
-      toast.warning("Please select at least one room");
+      toast.info("Please select at least one room.");
       return;
     }
-
     try {
+      // send availability update for each selected room
       await Promise.all(
-        selectedRooms.map((roomId) => {
-          const res = axios.put(`${BASE_URL}/rooms/availability/${roomId}`, {
-            dates: allDates,
-          });
-          return res;
-        })
+        selectedRooms.map((roomId) =>
+          axios.put(
+            `${BASE_URL}/rooms/availability/${roomId}`,
+            { dates: allDates }
+          )
+        )
       );
-
-      // Success toast
-      toast.success("Booking confirmed!", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-
+      toast.success("Rooms reserved successfully");
       setOpen(false);
-      navigate("/");
     } catch (err) {
-      // Error toast
-      toast.error("Failed to complete your booking. Please try again.", {
-        position: "top-right",
-        autoClose: 5000,
-      });
+      console.error("Reserve error:", err);
+      toast.error("Failed to reserve rooms. Try again.");
     }
   };
 
@@ -144,7 +132,7 @@ const Reserve = ({ setOpen, hotelId, dates: propDates }) => {
               </div>
             </div>
           ))}
-        <div onClick={handleClick} className="rButton">
+        <div onClick={handleReserve} className="rButton">
           Reserve Now!
         </div>
       </div>
