@@ -36,9 +36,26 @@ const Reserve = ({ setOpen, hotelId }) => {
     return dates;
   };
 
-  const allDates = getDatesInRange(dates[0].startDate, dates[0].endDate);
+  // Use SearchContext dates if available, otherwise fallback to [today, tomorrow]
+  const effectiveDates =
+    dates && Array.isArray(dates) && dates.length > 0 && dates[0]?.startDate
+      ? dates
+      : [
+          {
+            startDate: new Date(),
+            endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+          },
+        ];
+
+  const allDates = getDatesInRange(
+    effectiveDates[0].startDate,
+    effectiveDates[0].endDate
+  );
   const isAvailable = (roomNumber) => {
-    const isFound = roomNumber.unavailableDates.some((date) =>
+    const unavailable = Array.isArray(roomNumber.unavailableDates)
+      ? roomNumber.unavailableDates
+      : [];
+    const isFound = unavailable.some((date) =>
       allDates.includes(new Date(date).getTime())
     );
     return !isFound;
