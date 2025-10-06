@@ -42,7 +42,8 @@ const HotelInfo = () => {
 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-  const {dates,options} = useContext(SearchContext);
+  // use the SearchContext options (dates are handled by effectiveDates above)
+  const { options } = useContext(SearchContext);
   const { user } = useContext(AuthContext);
   
   const { data, loading, error } = useFetch(`/hotels/find/${id}`);
@@ -60,19 +61,14 @@ const HotelInfo = () => {
   }
   const rooms = options?.room || 1;
 
-  const days =
-    passedNights ||
-    (passedDates?.[0]?.startDate && passedDates?.[0]?.endDate
-      ? dayDifference(
-          new Date(passedDates[0].endDate),
-          new Date(passedDates[0].startDate)
-        )
-      : dates?.[0]?.startDate && dates?.[0]?.endDate
-      ? dayDifference(
-          new Date(dates[0].endDate),
-          new Date(dates[0].startDate)
-        )
-      : 1);
+  // compute days from effectiveDates (fallback to today -> tomorrow) and ensure at least 1 night
+  const startDate = effectiveDates?.[0]?.startDate
+    ? new Date(effectiveDates[0].startDate)
+    : new Date();
+  const endDate = effectiveDates?.[0]?.endDate
+    ? new Date(effectiveDates[0].endDate)
+    : new Date(new Date().setDate(new Date().getDate() + 1));
+  const days = Math.max(1, dayDifference(startDate, endDate));
 
   const handleOpen = (index) => {
     setSlideNumber(index);
