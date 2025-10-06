@@ -11,11 +11,19 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 const Reserve = ({ setOpen, hotelId, dates: propDates }) => {
   const { data, loading, error } = useFetch(`/hotels/room/${hotelId}`);
+  // local copy of fetched data so we can update UI immediately after booking
+  const [localData, setLocalData] = useState([]);
   const { user } = useContext(AuthContext);
   const [selectedRooms, setSelectedRooms] = useState([]);
   const { dates: ctxDates } = useContext(SearchContext);
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API_URL || "";
+
+  useEffect(() => {
+    if (Array.isArray(data) && data.length > 0) {
+      setLocalData(data);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (!user) {
@@ -88,7 +96,31 @@ const Reserve = ({ setOpen, hotelId, dates: propDates }) => {
           )
         )
       );
+      // update local copy so UI shows rooms as booked immediately
+      setLocalData((prev) => {
+        return prev.map((item) => {
+          return {
+            ...item,
+            roomNumbers: item.roomNumbers.map((rn) => {
+              if (selectedRooms.includes(rn._id)) {
+                const existing = Array.isArray(rn.unavailableDates)
+                  ? rn.unavailableDates.map((d) =>
+                      typeof d === "number" ? d : new Date(d).getTime()
+                    )
+                  : [];
+                const toAdd = allDates.map((d) =>
+                  typeof d === "number" ? d : new Date(d).getTime()
+                );
+                const merged = Array.from(new Set([...existing, ...toAdd]));
+                return { ...rn, unavailableDates: merged };
+              }
+              return rn;
+            }),
+          };
+        });
+      });
       toast.success("Rooms reserved successfully");
+      setSelectedRooms([]);
       setOpen(false);
     } catch (err) {
       console.error("Reserve error:", err);
